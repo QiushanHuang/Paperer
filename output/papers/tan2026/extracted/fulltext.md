@@ -1,4 +1,5 @@
-<!-- Page 1 -->
+# Page 1
+
 Origin and evolution of the ore-forming fluids in the giant Dongping 
 wolframite–quartz vein–type deposit in the Jiangnan Orogen, South China: 
 fluid inclusions and H–O isotopic constraints
@@ -57,10 +58,10 @@ Received 11 December 2025; Received in revised form 31 December 2025; Accepted 3
 Ore Geology Reviews 189 (2026) 107104 
 Available online 10 January 2026 
 0169-1368/© 2026 The Authors. Published by Elsevier B.V. This is an open access article under the CC BY-NC license ( http://creativecommons.org/licenses/by- 
-nc/4.0/ ). 
+nc/4.0/ ).
 
+# Page 2
 
-<!-- Page 2 -->
 1. Introduction
 Tungsten (W) is a kind of strategic resource that has become an 
 indispensable component in various industrial applications, especially 
@@ -190,18 +191,18 @@ dant wolframite (WolII)–quartz (QtzII) veins. Wolframite–quartz veins
 comprise abundant wolframite (Fig. 3c–e) and quartz, with minor 
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-2 
+2
 
+# Page 3
 
-<!-- Page 3 -->
 Fig. 1. Simplified geological map of the Jiangnan tungsten metallogenic belt (a) (after Mao et al., 2017, 2020; Wu et al., 2019a,b; Yang et al., 2022) and regional 
 geology of the Dongping ore district (b) (after Hu et al., 2018).
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-3 
+3
 
+# Page 4
 
-<!-- Page 4 -->
 scheelite (Fig. 3d) and muscovite (Fig. 3g). Wolframite displays a sub­
 hedral tabular to euhedral long prismatic morphology (Fig. 4f–h). QtzII 
 has a euhedral prismatic morphology and is replaced by later sulfides 
@@ -245,10 +246,10 @@ Fluid inclusion microthermometry of quartz and fluorite was
 Fig. 2. Geological section along No. 0 exploration line in the Dongping ore district (after GSJP, 2016).
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-4 
+4
 
+# Page 5
 
-<!-- Page 5 -->
 performed by using a Linkam THMSG-600 Heating-Freezing stage (–196 
 to 600 ◦C) mounted on a Zeiss Axioscope A1 microscope at the Collab­
 orative Innovation Center for Exploration of Strategic Mineral Resources 
@@ -305,10 +306,10 @@ distributed along the cracks of the wolframite–quartz vein. (h) Sulfide veins 
 fluorite–carbonate vein. Abbreviations: Bi–biotite; Qtz–quartz; Wol–wolframite; Mus–muscovite; Sch–scheelite; Fl–fluorite; Sulf–Sulfide.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-5 
+5
 
+# Page 6
 
-<!-- Page 6 -->
 commonly occur as irregular (Figs. 5g–h, r, t; 6g; 7h–i) and needle-like 
 (Fig. 6f) in shape. Type IIIw inclusions are usually larger than type 
 IIIq and type IIIf inclusions.
@@ -345,10 +346,10 @@ Rt–rutile, Tur–tourmaline, Wol–wolframite, Ccp–chalcopyrite, Sch–schee
 Chl–chlorite, Cc–calcite.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-6 
+6
 
+# Page 7
 
-<!-- Page 7 -->
 melting temperature displays a range from –9.6 to –0.5 ◦C, corre­
 sponding to salinity of 0.88–13.51 wt% NaCl equiv. (peak at 4–5 wt%) 
 (Fig. 8, Fig. 9c–d). In the quartz–sulfide stage, 18 fluid inclusions in 
@@ -375,10 +376,10 @@ Fig. 6. Photomicrographs showing different types of primary fluid inclusions obs
 IIIw inclusions.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-7 
+7
 
+# Page 8
 
-<!-- Page 8 -->
 5.4. Hydrogen–oxygen isotope analyses
 The H–O isotope results of quartz are illustrated in Table 2 and 
 Fig. 11. The δDv-SMOW values of quartz from the pre-ore alteration stage 
@@ -584,17 +585,17 @@ triangular, irregular, etc
 Fig. 8. Box-plots of homogenization temperatures (left) and salinities (right) of fluid inclusions from different stages and host minerals in the Dongping deposit.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-8 
+8
 
+# Page 9
 
-<!-- Page 9 -->
 Fig. 9. Histograms of homogenization temperatures (left) and salinities (right) of fluid inclusions from different stages and host minerals in the Dongping deposit.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-9 
+9
 
+# Page 10
 
-<!-- Page 10 -->
 et al., 2020; Yang et al., 2020; Lu et al., 2022). Numerous studies have 
 been performed on the fluid sources of wolframite–quartz vein–type 
 deposits using isotopic compositions (Chen et al., 2018; Li et al., 2018a; 
@@ -609,10 +610,10 @@ the fluid inclusions in QtzII from the wolframite–quartz stage. Note that mino
 collected from the fluid inclusions in QtzIII from the quartz–sulfide stage, with trace N2 identified.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-10 
+10
 
+# Page 11
 
-<!-- Page 11 -->
 In this study, the H–O isotopic compositions of the fluids of the pre-ore 
 alteration stage directly plot within the field of magmatic water 
 (Fig. 11), suggesting dominant magmatic origin of the initial fluids. The 
@@ -725,10 +726,10 @@ Hydrogen and oxygen isotope data for the Yaogangxian, Xihuashan, Maoping, and Ma
 (2018), and Hu et al. (2022), respectively.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-11 
+11
 
+# Page 12
 
-<!-- Page 12 -->
 progressively increasing contribution of meteoric water into magmatic- 
 hydrothermal fluids in the late two stages.
 6.2. Fluid evolution
@@ -775,10 +776,10 @@ Fig. 12. Salinity vs. homogenization temperature plots for the QtzI from the pre
 quartz–sulfide stage, and FlIV from the fluorite–carbonate stage.
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-12 
+12
 
+# Page 13
 
-<!-- Page 13 -->
 Combined with the features of fluid inclusions and H–O isotope com­
 positions, we speculate that at least two pulsed fluids were exsolved in 
 the Dongping deposit. The first exsolved fluids from the granite are 
@@ -905,10 +906,10 @@ Jiangxi Provincial Natural Science Foundation (No. 20242BAB20138),
 and Experimental Technology Research Program of China University of 
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-13 
+13
 
+# Page 14
 
-<!-- Page 14 -->
 Geosciences (Wuhan) (No. SJ-202501). We thank the two anonymous 
 reviewers for their constructive reviews of the article. We are grateful to 
 Dr. Junying Ding and Dr. Junyi Pan from the State Key Laboratory for 
@@ -1073,10 +1074,10 @@ Pengshan Sn-polymetallic orefield, Jiangxi Province. Acta Petrol. Sinica 26,
 2818–2834 (in Chinese with English abstract). 
 J. Tan et al.                                                                                                                                                                                                                                      
 Ore Geology Reviews 189 (2026) 107104 
-14 
+14
 
+# Page 15
 
-<!-- Page 15 -->
 Lyu, X.H., Wang, G.G., Ni, P., 2023. Reworking of continental crust and the large-scale 
 Cu and W mineralization in the northern Jiangxi part of the Jiangnan Orogen. Bull. 
 Mineral. Petrol. Geochem. 42 (5), 1132–1149 (in Chinese with English abstract). 
