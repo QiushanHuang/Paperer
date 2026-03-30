@@ -25,26 +25,30 @@
 
 下面的图片全部来自仓库内置的真实论文验证样例：
 
-- 论文：`Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents`
-- bundle 路径：[`output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/)
+- 论文：`Origin and evolution of the ore-forming fluids in the giant Dongping wolframite-quartz vein-type deposit in the Jiangnan Orogen, South China: fluid inclusions and H-O isotopic constraints`
+- bundle 路径：[`output/papers/tan2026/`](output/papers/tan2026/)
 
 ### 论文头图区块
 
-<img src="output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/assets/header/paper-header.png" alt="paper header preview" width="100%">
+<img src="output/papers/tan2026/assets/header/paper-header.png" alt="paper header preview" width="100%">
 
-### 图与公式预览
+### 图、表与公式预览
 
 <table>
   <tr>
-    <td width="50%">
-      <img src="output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/assets/figures/fig-001.png" alt="figure preview" width="100%">
+    <td width="33%">
+      <img src="output/papers/tan2026/assets/figures/fig-008.png" alt="figure preview" width="100%">
     </td>
-    <td width="50%">
-      <img src="output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/assets/formulas/formula-002.png" alt="formula preview" width="100%">
+    <td width="33%">
+      <img src="output/papers/tan2026/assets/tables/table-001.png" alt="table preview" width="100%">
+    </td>
+    <td width="33%">
+      <img src="output/papers/tan2026/assets/formulas/formula-001.png" alt="formula preview" width="100%">
     </td>
   </tr>
   <tr>
     <td align="center">Figure preview</td>
+    <td align="center">Table preview</td>
     <td align="center">Formula preview</td>
   </tr>
 </table>
@@ -53,9 +57,9 @@
 
 - 从真实 PDF 提取正文
 - 生成论文头图截图
-- 生成关键 figure 与 formula 资产
+- 生成 figure、table 与 formula 资产
 - 输出中文研究简报
-- 在提取不完全时正确写出 `partial` 状态与 `report.json`
+- 生成 `manifest.json` 与结构化提取报告
 
 ## 仓库结构
 
@@ -180,20 +184,29 @@
 
 ## 真实论文验证样例
 
-当前仓库已经包含一篇真实论文的完整验证 bundle：
+当前仓库包含两篇真实论文的验证 bundle：
 
-- PDF：[`source.pdf`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/source.pdf)
-- 总结：[`summary.md`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/summary.md)
-- 报告：[`report.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/report.json)
-- 元数据：[`extracted/metadata.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/metadata.json)
-- 正文提取：[`extracted/fulltext.md`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/fulltext.md)
-- 提取问题：[`extracted/errors.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/errors.json)
+- `Tan2026`
+  - PDF：[`source.pdf`](output/papers/tan2026/source.pdf)
+  - 总结：[`summary.md`](output/papers/tan2026/summary.md)
+  - 资产清单：[`manifest.json`](output/papers/tan2026/manifest.json)
+  - 报告：[`report.json`](output/papers/tan2026/report.json)
+  - 元数据：[`extracted/metadata.json`](output/papers/tan2026/extracted/metadata.json)
+  - 正文提取：[`extracted/fulltext.md`](output/papers/tan2026/extracted/fulltext.md)
+- `simulating-particle-dispersions-in-nematic-liquid-crystal-solvents`
+  - PDF：[`source.pdf`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/source.pdf)
+  - 总结：[`summary.md`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/summary.md)
+  - 资产清单：[`manifest.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/manifest.json)
+  - 报告：[`report.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/report.json)
+  - 元数据：[`extracted/metadata.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/metadata.json)
+  - 正文提取：[`extracted/fulltext.md`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/fulltext.md)
 
-这个样例的实际意义，不只是“仓库里放了一篇论文”，而是它验证了当前 skill contract 的关键路径：
+这两个样例一起覆盖了当前 skill contract 的关键路径：
 
 - readable PDF -> extracted text
 - extracted text + visual assets -> polished `summary.md`
-- incomplete extraction -> explicit `report.json`
+- asset extraction -> explicit `manifest.json`
+- partial or complete output -> explicit `report.json`
 
 同时，仓库根目录下的 [`examples/`](examples/) 与 [`examples/papers/`](examples/papers/) 保存了当前用于复现实验的原始 PDF：
 

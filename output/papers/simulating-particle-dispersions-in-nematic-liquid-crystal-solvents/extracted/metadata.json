@@ -1,6 +1,6 @@
 {
-  "slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
-  "source_filename": "Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf",
+  "paper_slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
+  "source_pdf": "examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf",
   "page_count": 4,
   "pdf_metadata": {
     "format": "PDF 1.3",
@@ -14,5 +14,9 @@
     "modDate": "D:20010725070821-05'00'",
     "trapped": "",
     "encryption": null
-  }
+  },
+  "title": "Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents",
+  "author": "Ryoichi Yamamoto",
+  "journal": "Physical Review Letters",
+  "target_language": "Chinese"
 }

@@ -1,0 +1,97 @@
+{
+  "paper_slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
+  "status": "complete",
+  "policy": {
+    "crop_bias": "prefer-larger-over-missing",
+    "dedupe": true,
+    "second_pass_review": true
+  },
+  "summary": {
+    "figure_count": 3,
+    "table_count": 0,
+    "formula_count": 7
+  },
+  "assets": [
+    {
+      "id": "fig-001",
+      "type": "figure",
+      "page": 3,
+      "path": "assets/figures/fig-001.png",
+      "caption_hint": "Fig. 1 director configurations around a single particle",
+      "quality_flags": []
+    },
+    {
+      "id": "fig-002",
+      "type": "figure",
+      "page": 3,
+      "path": "assets/figures/fig-002.png",
+      "caption_hint": "Fig. 2 total free energies for the single particle cases",
+      "quality_flags": []
+    },
+    {
+      "id": "fig-003",
+      "type": "figure",
+      "page": 4,
+      "path": "assets/figures/fig-003.png",
+      "caption_hint": "Fig. 3 aggregation and ordering process of colloidal particles",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-002",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-002.png",
+      "caption_hint": "Eq. (2) modified free energy functional",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-003",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-003.png",
+      "caption_hint": "Eq. (3) interfacial profile",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-004",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-004.png",
+      "caption_hint": "Eq. (4) equilibrium condition",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-005",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-005.png",
+      "caption_hint": "Eq. (5) solvent-mediated force definition",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-006",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-006.png",
+      "caption_hint": "Eq. (6) explicit force expression",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-007",
+      "type": "formula",
+      "page": 2,
+      "path": "assets/formulas/formula-007.png",
+      "caption_hint": "Eq. (7) general particle dynamics equation",
+      "quality_flags": []
+    },
+    {
+      "id": "formula-009",
+      "type": "formula",
+      "page": 3,
+      "path": "assets/formulas/formula-009.png",
+      "caption_hint": "Eq. (9) steepest descent update",
+      "quality_flags": []
+    }
+  ],
+  "global_flags": []
+}

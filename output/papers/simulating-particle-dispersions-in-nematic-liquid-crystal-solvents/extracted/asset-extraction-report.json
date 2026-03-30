@@ -1,0 +1,8 @@
+{
+  "status": "complete",
+  "warnings": [],
+  "notes": [
+    "The source paper exposes three numbered figures and several numbered equations as the core visual evidence.",
+    "No standalone tables were confidently detected in the paper layout, so no table assets were emitted."
+  ]
+}

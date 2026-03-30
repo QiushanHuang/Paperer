@@ -1,6 +1,7 @@
 {
   "target_language": "Chinese",
   "status": "partial",
+  "asset_manifest_status": "complete",
   "paper_slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
   "summary_path": "output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/summary.md",
   "missing_sections": [],
