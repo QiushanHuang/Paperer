@@ -218,12 +218,14 @@ simulating-particle-dispersions-in-nematic-liquid-crystal-solvents
 ```text
 output/papers/<paper-slug>/
 ├── source.pdf
+├── manifest.json
 ├── summary.md
 ├── report.json
 ├── extracted/
 │   ├── fulltext.md
 │   ├── metadata.json
-│   └── errors.json
+│   ├── errors.json
+│   └── asset-extraction-report.json
 └── assets/
     ├── header/
     ├── figures/
@@ -252,6 +254,8 @@ output/papers/<paper-slug>/source.pdf
 - `extracted/fulltext.md`
 - `extracted/metadata.json`
 - `extracted/errors.json`
+- `manifest.json` when `paper-asset-extraction` is used
+- `extracted/asset-extraction-report.json` when visual assets are extracted conservatively
 
 建议：
 
@@ -294,6 +298,7 @@ output/papers/<paper-slug>/source.pdf
 - `missing_sections`
 - `missing_assets`
 - `unreadable_regions`
+- `asset_manifest_status`
 - `notes`
 - `errors`
 
@@ -326,6 +331,7 @@ output/papers/<paper-slug>/source.pdf
 
 - Readable PDF to structured `summary.md`
 - Language-switchable output via `target_language`
+- Conservative figure / table / formula extraction with `manifest.json`
 - Header / figure / table / formula asset organization
 - Explicit completeness reporting through `report.json`
 - Source-to-mirror workflow: `Paperer -> slidegen`
@@ -334,9 +340,10 @@ output/papers/<paper-slug>/source.pdf
 
 1. Prepare a readable paper PDF.
 2. Choose a stable paper slug.
-3. Provide `target_language`.
-4. Run `$literature-summary`.
-5. Review `summary.md`, `report.json`, and the generated assets.
+3. Run `$paper-asset-extraction` if you want conservative visual-asset extraction.
+4. Provide `target_language`.
+5. Run `$literature-summary`.
+6. Review `summary.md`, `report.json`, `manifest.json`, and the generated assets.
 
 ## 同步规则
 
@@ -354,7 +361,9 @@ output/papers/<paper-slug>/source.pdf
 目前仓库已经完成：
 
 - `literature-summary` 技能初版
+- `paper-asset-extraction` 技能初版
 - 对应设计文档
+- 两篇真实论文 PDF 示例
 - 一篇真实论文的 bundle 验证样例
 - README 升级版首页
 
