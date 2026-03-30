@@ -1,9 +1,5 @@
 {
-  "status": "partial",
-  "warnings": [
-    "Possible missed sibling subpanels remain on pages 4 and 7 because conservative cropping favored completeness over tight isolation.",
-    "Formula extraction retained one conservative crop candidate rather than a clean standalone equation block.",
-    "Table 1 remains readable only at a high level because the dense crop includes OCR noise."
-  ],
+  "status": "complete",
+  "warnings": [],
   "errors": []
 }

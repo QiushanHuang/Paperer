@@ -42,7 +42,7 @@ Optional:
 
 2. Run a two-pass extraction process using [references/extraction-policy.md](references/extraction-policy.md).
    - Pass 1: collect all plausible figure, table, and formula candidates.
-   - Pass 2: review, normalize, deduplicate, and widen any crop that risks losing content.
+   - Pass 2: review, normalize, deduplicate, verify numbering continuity, split mixed assets, and widen any crop that risks losing content.
 
 3. Write conservative assets into:
    - `assets/figures/`
@@ -55,7 +55,9 @@ Optional:
 
 6. Write `extracted/asset-extraction-report.json`.
 
-7. If this extraction is being prepared for `literature-summary`, follow [references/integration-contract.md](references/integration-contract.md).
+7. Record the repair batch in `logs/fix-logs/` whenever you are correcting extraction defects discovered during testing.
+
+8. If this extraction is being prepared for `literature-summary`, follow [references/integration-contract.md](references/integration-contract.md).
 
 ## Quick Reference
 
@@ -64,6 +66,9 @@ Optional:
 - Figures should keep labels, legends, and panel markers when possible.
 - Tables should keep full row/column structure and visible headers.
 - Formulas should keep the full displayed block and equation number when possible.
+- If figure or table numbering is detectable, asset ids must match the paper numbering.
+- If a figure number is skipped, re-check the paper before finalizing the bundle.
+- One emitted crop should correspond to one labeled figure or one labeled table unless the paper itself presents them as one numbered asset with subpanels.
 - Use `partial` when the asset set is probably incomplete.
 - Use `failed` only when the bundle is not meaningfully consumable downstream.
 
@@ -73,7 +78,10 @@ Before finishing, confirm:
 
 - every emitted asset is listed in `manifest.json`
 - asset types and page numbers are present
+- figure and table ids match the paper labels when those labels are visible
+- numbering is continuous for detected figures and tables
 - obvious duplicates are removed or flagged
+- mixed figure-table crops are split or explicitly failed for rework
 - likely missing sibling panels or split equations are flagged
 - `manifest.json` and `asset-extraction-report.json` agree on status
 
@@ -86,3 +94,5 @@ Before finishing, confirm:
 | Treating multiline equations as separate assets by default | Prefer one logical formula block unless there is strong evidence otherwise. |
 | Hiding missed-content risk | Mark `possible_missed_sibling` or a global missing-assets flag explicitly. |
 | Emitting assets without a manifest | `manifest.json` is required for downstream use. |
+| Letting file ids drift away from the paper numbering | If the paper says `Fig. 7`, the emitted file should be `fig-007.*`. |
+| Keeping one crop that contains both a figure and a table | Split them into separate assets and review the numbering again. |

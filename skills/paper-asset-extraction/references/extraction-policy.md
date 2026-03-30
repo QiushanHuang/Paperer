@@ -25,6 +25,9 @@ For every candidate:
 - keep alternates only when they preserve otherwise missing content
 - widen crops that look too tight
 - flag likely missed siblings or adjacent formula lines
+- separate mixed crops that contain multiple labeled assets of different types
+- if labels are visible, verify that each emitted figure or table corresponds to exactly one paper number
+- if numbering is not continuous, go back and look for the missing figure or table before finalizing
 
 ## Conservative Ordering Rules
 
@@ -47,6 +50,13 @@ Keep:
 - panel labels such as `(a)` and `(b)`
 - nearby caption text when needed to disambiguate the figure
 
+Rules:
+
+- one crop should map to one numbered figure
+- a multi-panel figure is still one figure if the paper gives it one number
+- if the crop contains `Fig. 8` and `Table 1`, split them
+- emitted file ids should match the paper numbering when the caption is visible
+
 ### Tables
 
 Keep:
@@ -54,6 +64,12 @@ Keep:
 - full row and column structure
 - headers when visible
 - enough surrounding context to avoid clipping edges
+
+Rules:
+
+- one crop should map to one numbered table
+- do not merge a table with a neighboring figure just because they share a page
+- emitted file ids should match the paper numbering when the caption is visible
 
 ### Formulas
 
@@ -64,3 +80,12 @@ Keep:
 - neighboring lines when needed for multiline expressions
 
 If the formula is hard to segment cleanly, prefer one larger block over multiple clipped fragments.
+
+## Numbering Review
+
+Before finalizing a bundle:
+
+- list the detected `Fig. N` and `Table N` numbers in paper order
+- check for gaps such as `1, 2, 4`
+- if a gap exists, re-open the relevant pages and look for the missing asset
+- if the missing asset cannot be recovered, mark the bundle `partial` and record the gap explicitly

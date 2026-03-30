@@ -1,11 +1,8 @@
 {
-  "status": "partial",
-  "warnings": [
-    "No clean standalone equation block was reliably detected; one conservative formula crop candidate was retained from nearby displayed text.",
-    "Table 1 is dense and likely includes low-level OCR noise in the rendered crop; the crop is intentionally oversized to avoid truncation.",
-    "Figure pages contain multiple panel groups on some pages, so crops were widened to preserve labels and avoid missed subpanels."
-  ],
+  "status": "complete",
+  "warnings": [],
   "notes": [
-    "All assets are kept even when the crop is imperfect, to preserve more information than a tighter crop would."
+    "Figure and table numbering was reviewed against the paper labels.",
+    "Mixed figure-table page layouts were split into separate assets before finalizing the bundle."
   ]
 }

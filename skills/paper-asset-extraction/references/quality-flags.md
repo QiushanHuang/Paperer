@@ -10,6 +10,8 @@ Use quality flags to make extraction uncertainty explicit instead of hiding it.
 - `possible_missed_sibling`
 - `uncertain_type`
 - `low_readability`
+- `mixed_assets_risk`
+- `truncated_visual`
 
 ## Global flags
 
@@ -18,6 +20,7 @@ Use quality flags to make extraction uncertainty explicit instead of hiding it.
 - `possible_missing_formulas`
 - `page_layout_ambiguous`
 - `asset_set_incomplete`
+- `numbering_gap`
 
 ## Interpretation rules
 
@@ -33,6 +36,10 @@ Use quality flags to make extraction uncertainty explicit instead of hiding it.
   - do not use the asset for strong claims
 - `low_readability`
   - use only high-level interpretation
+- `mixed_assets_risk`
+  - the crop may still contain more than one labeled asset and should be split or reviewed
+- `truncated_visual`
+  - the crop likely cuts off meaningful visual content and should not be trusted as a final asset
 
 ## Status guidance
 
@@ -41,4 +48,5 @@ Typical `partial` triggers:
 - one or more major assets likely missing
 - important formulas unreadable or fragmented
 - several assets carry `tight_crop_risk`
+- one or more figure or table numbers are missing from the recovered sequence
 - the overall set appears incomplete

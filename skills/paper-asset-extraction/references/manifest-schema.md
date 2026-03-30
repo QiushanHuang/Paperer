@@ -41,6 +41,8 @@
 - `caption_hint`
 - `quality_flags`
 
+When figure or table numbering is visible in the paper, the numeric suffix of `id` must match that paper numbering.
+
 ## Per-asset structure
 
 ```json
@@ -49,7 +51,7 @@
   "type": "figure",
   "page": 3,
   "path": "assets/figures/fig-001.png",
-  "caption_hint": "FIG. 1",
+  "caption_hint": "Fig. 1 regional geology map",
   "quality_flags": []
 }
 ```

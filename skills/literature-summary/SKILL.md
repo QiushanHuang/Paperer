@@ -58,10 +58,11 @@ If `target_language` is missing, ask for it before writing.
    - follow the selected language
    - read like a professional research brief
    - embed the header image and every available figure, table, and formula directly in the Markdown
-   - explain each visual in the structure: what it is, what can be observed, and what it shows for the paper's argument
+   - explain each visual in full sentences that naturally answer what it is, what can be observed, and what it shows for the paper's argument
    - keep evidence anchors mainly in technical sections
    - respect asset-level uncertainty from `manifest.json`
    - keep the prose focused on the paper itself rather than the extraction workflow
+   - let `1.3 核心结论速览` expand to multiple problem / method / result / contribution points when the paper supports them
 
 5. Apply the failure rules from [references/failure-rules.md](references/failure-rules.md).
 
@@ -81,7 +82,7 @@ If `target_language` is missing, ask for it before writing.
 - Do not keep Chinese headings when the selected language is not Chinese.
 - Do not use ratings; explain judgment in prose.
 - Technical sections should include page, figure, table, or equation anchors when available.
-- Every figure, table, and formula block must be embedded and explained with the same three questions.
+- Every figure, table, and formula block must be embedded and explained in full sentences that cover the same three questions.
 - `summary.md` should not talk about crop choices, screenshot quality, or similar process-side issues.
 - Separate the authors' claimed contribution from the paper's supported contribution.
 - If extraction is partial, still produce a clean summary and an explicit `report.json`.

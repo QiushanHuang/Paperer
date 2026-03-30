@@ -15,6 +15,7 @@ The headings must be localized to `target_language`. The Chinese labels below de
 - Keep the prose focused on the paper itself. Do not discuss extraction strategy, crop quality, or other workflow-side details inside `summary.md`.
 - Every header image, figure, table, and formula that exists in the bundle must be embedded visibly inside `summary.md`.
 - After `summary.md` is written, render a simple `draft.pdf` from it for quick review.
+- In `1.3 核心结论速览`, allow multiple problem / method / result / contribution points when the paper clearly contains more than one.
 
 ## Recommended structure
 
@@ -81,10 +82,10 @@ Cover:
 For each asset:
 
 - place the screenshot
-- explain it in a stable three-part structure:
-  - 是什么
-  - 可以发现什么
-  - 说明了什么
+- explain it in complete sentences that answer three questions naturally:
+  - what it is
+  - what can be observed from it
+  - what it shows for the paper's argument
 
 Avoid raw repetition of table values or equations unless needed to explain meaning.
 Do not summarize extraction problems here. If the bundle has extraction uncertainty, keep that in `report.json` unless it materially changes what the paper itself can support.
