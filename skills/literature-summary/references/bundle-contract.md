@@ -1,0 +1,76 @@
+# Bundle Contract
+
+Normalize upstream extraction into a stable paper bundle before writing the final summary.
+
+## Expected bundle
+
+```text
+paper-bundle/
+  source.pdf
+  extracted/
+    fulltext.md
+    metadata.json
+    errors.json
+  assets/
+    header/
+      paper-header.png
+    figures/
+      fig-001.png
+    tables/
+      table-001.png
+    formulas/
+      formula-001.png
+```
+
+## Minimum required for full-quality output
+
+- readable full paper text or a near-complete extraction
+- paper title
+- authors and affiliations when available
+- one header screenshot
+- screenshots for every detectable figure
+- screenshots for every detectable table
+- screenshots for every detectable formula
+
+## Output artifacts
+
+After writing the summary, the bundle should contain:
+
+```text
+paper-bundle/
+  source.pdf
+  summary.md
+  report.json
+  extracted/
+  assets/
+```
+
+## `report.json` fields
+
+At minimum include:
+
+- `target_language`
+- `status`
+- `missing_sections`
+- `missing_assets`
+- `unreadable_regions`
+- `notes`
+- `errors`
+
+Suggested `status` values:
+
+- `complete`
+- `partial`
+- `failed`
+
+## Validation checklist
+
+Before writing `summary.md`, verify:
+
+- Is the PDF readable enough to summarize beyond the abstract?
+- Is the header screenshot present?
+- Are figures, tables, and formulas all represented or explicitly missing?
+- Is metadata present and internally consistent?
+- Do extraction errors explain any missing content?
+
+If not, downgrade to partial output and make the gaps explicit.
