@@ -1,0 +1,22 @@
+{
+  "paper_slug": "219qiushan",
+  "source_pdf": "examples/papers/219qiushan.pdf",
+  "page_count": 10,
+  "pdf_metadata": {
+    "format": "PDF 1.4",
+    "title": "",
+    "author": "",
+    "subject": "",
+    "keywords": "",
+    "creator": "",
+    "producer": "macOS Version 26.3.1 (a) (Build 25D771280a) Quartz PDFContext",
+    "creationDate": "D:20260330173810Z00'00'",
+    "modDate": "D:20260330173810Z00'00'",
+    "trapped": "",
+    "encryption": null
+  },
+  "title": "Interpretable Molecular Dynamics-Machine Learning Framework for Hydrogen Uptake Mechanism in Magnesium",
+  "author": "Qiushan Huang; Zhi-Qian Zhang; Yue Cui",
+  "journal": "Not stated in source PDF",
+  "target_language": "Chinese"
+}

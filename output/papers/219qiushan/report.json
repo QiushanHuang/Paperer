@@ -1,0 +1,15 @@
+{
+  "target_language": "Chinese",
+  "status": "complete",
+  "asset_manifest_status": "complete",
+  "paper_slug": "219qiushan",
+  "summary_path": "output/papers/219qiushan/summary.md",
+  "missing_sections": [],
+  "missing_assets": [],
+  "unreadable_regions": [],
+  "notes": [
+    "The validation run generated a header crop and seven figure assets.",
+    "The paper's main evidence is carried by figures and narrative analysis rather than standalone tables or displayed formulas."
+  ],
+  "errors": []
+}
