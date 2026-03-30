@@ -1,0 +1,13 @@
+{
+  "status": "partial",
+  "notes": [
+    "Text extraction is readable for prose sections but equation glyph extraction is noisy.",
+    "No tables were confidently detected in this paper; assets/tables is intentionally empty.",
+    "Figure and formula crops were generated heuristically from page coordinates and should be treated as validation artifacts."
+  ],
+  "missing_assets": [],
+  "unreadable_regions": [
+    "Some displayed equations contain damaged glyph encoding in extracted text."
+  ],
+  "errors": []
+}
