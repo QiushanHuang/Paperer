@@ -1,7 +1,7 @@
 {
   "status": "partial",
   "warnings": [
-    "No standalone vector equation blocks were reliably detected; formula extraction is conservative and based on nearby displayed text.",
+    "No clean standalone equation block was reliably detected; one conservative formula crop candidate was retained from nearby displayed text.",
     "Table 1 is dense and likely includes low-level OCR noise in the rendered crop; the crop is intentionally oversized to avoid truncation.",
     "Figure pages contain multiple panel groups on some pages, so crops were widened to preserve labels and avoid missed subpanels."
   ],

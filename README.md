@@ -68,8 +68,9 @@
 │       └── 2026-03-30-paper-asset-extraction-skill-design.md
 ├── examples/
 │   ├── README.md
-│   ├── Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf
-│   └── Tan2026.pdf
+│   └── papers/
+│       ├── Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf
+│       └── Tan2026.pdf
 ├── skills/
 │   ├── literature-summary/
 │   │   ├── SKILL.md
@@ -194,7 +195,7 @@
 - extracted text + visual assets -> polished `summary.md`
 - incomplete extraction -> explicit `report.json`
 
-同时，仓库根目录下的 [`examples/`](examples/) 保存了当前用于复现实验的原始 PDF：
+同时，仓库根目录下的 [`examples/`](examples/) 与 [`examples/papers/`](examples/papers/) 保存了当前用于复现实验的原始 PDF：
 
 - [`examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`](examples/papers/Simulating%20Particle%20Dispersions%20in%20Nematic%20Liquid-Crystal%20Solvents.pdf)
 - [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)

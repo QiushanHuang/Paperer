@@ -111,7 +111,8 @@
       "path": "assets/tables/table-001.png",
       "caption_hint": "Table 1 microthermometric data of fluid inclusions",
       "quality_flags": [
-        "oversized_crop"
+        "oversized_crop",
+        "low_readability"
       ]
     },
     {
