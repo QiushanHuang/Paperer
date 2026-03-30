@@ -12,6 +12,9 @@ The headings must be localized to `target_language`. The Chinese labels below de
 - Use evidence anchors mainly in technical sections.
 - Avoid ratings. Make judgment in prose.
 - When extraction is partial, keep the document polished and mark missing support clearly.
+- Keep the prose focused on the paper itself. Do not discuss extraction strategy, crop quality, or other workflow-side details inside `summary.md`.
+- Every header image, figure, table, and formula that exists in the bundle must be embedded visibly inside `summary.md`.
+- After `summary.md` is written, render a simple `draft.pdf` from it for quick review.
 
 ## Recommended structure
 
@@ -24,6 +27,8 @@ Include:
 - authors and affiliations
 - basic citation metadata
 - header screenshot covering title, venue, authors, and affiliations
+
+The header screenshot must be embedded directly in the Markdown, not only described in text.
 
 ### 1. 论文概览
 
@@ -76,10 +81,13 @@ Cover:
 For each asset:
 
 - place the screenshot
-- explain what it shows
-- explain why it matters in the paper's argument
+- explain it in a stable three-part structure:
+  - 是什么
+  - 可以发现什么
+  - 说明了什么
 
 Avoid raw repetition of table values or equations unless needed to explain meaning.
+Do not summarize extraction problems here. If the bundle has extraction uncertainty, keep that in `report.json` unless it materially changes what the paper itself can support.
 
 ### 6. 作者真正完成了什么
 
@@ -126,3 +134,4 @@ Avoid:
 - filler translation
 - exaggerated praise
 - unsupported certainty
+- commentary about your own extraction or rendering process

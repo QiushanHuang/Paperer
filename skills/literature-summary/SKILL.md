@@ -57,16 +57,21 @@ If `target_language` is missing, ask for it before writing.
    The output must:
    - follow the selected language
    - read like a professional research brief
-   - explain visuals instead of dumping them
+   - embed the header image and every available figure, table, and formula directly in the Markdown
+   - explain each visual in the structure: what it is, what can be observed, and what it shows for the paper's argument
    - keep evidence anchors mainly in technical sections
    - respect asset-level uncertainty from `manifest.json`
+   - keep the prose focused on the paper itself rather than the extraction workflow
 
 5. Apply the failure rules from [references/failure-rules.md](references/failure-rules.md).
 
 6. Write `report.json`.
    Record completeness, missing assets, unreadable regions, explicit errors, and any propagated uncertainty from `paper-asset-extraction`.
 
-7. If this skill is being authored in `Paperer`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `slidegen`.
+7. Render a simple `draft.pdf` from `summary.md` for quick review.
+   It does not need final-design polish, but it must preserve headings, paragraphs, bullets, and embedded images well enough to inspect the summary as a document.
+
+8. If this skill is being authored in `Paperer`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `slidegen`.
 
 ## Quick Reference
 
@@ -76,9 +81,11 @@ If `target_language` is missing, ask for it before writing.
 - Do not keep Chinese headings when the selected language is not Chinese.
 - Do not use ratings; explain judgment in prose.
 - Technical sections should include page, figure, table, or equation anchors when available.
-- Every figure, table, and formula block needs a short explanation.
+- Every figure, table, and formula block must be embedded and explained with the same three questions.
+- `summary.md` should not talk about crop choices, screenshot quality, or similar process-side issues.
 - Separate the authors' claimed contribution from the paper's supported contribution.
 - If extraction is partial, still produce a clean summary and an explicit `report.json`.
+- Render `draft.pdf` after `summary.md`.
 
 ## Final Checks
 
@@ -88,9 +95,12 @@ Before finishing, confirm:
 - section hierarchy is stable
 - no placeholders or broken references remain
 - every included visual has explanation text
+- every included visual is actually embedded in `summary.md`
 - missing visuals or unreadable sections are disclosed cleanly
 - manifest-level quality flags are reflected in the prose and `report.json`
+- extraction-process details stay in `report.json`, not in the main summary prose
 - `report.json` matches the actual completeness of the bundle
+- `draft.pdf` exists and is readable
 
 ## Common Mistakes
 
@@ -101,4 +111,5 @@ Before finishing, confirm:
 | Keeping Chinese headings for every language | Localize the whole report to `target_language` unless the user asks for bilingual output. |
 | Dumping screenshots without interpretation | Every visual block needs a short explanation and its role in the argument. |
 | Guessing missing method or formula details | Mark uncertainty explicitly and record it in `report.json`. |
+| Writing about crop quality or extraction strategy inside the summary | Keep workflow-side issues in `report.json`; keep `summary.md` focused on the paper itself. |
 | Writing a rough note dump | Rewrite into publication-ready prose with stable structure. |

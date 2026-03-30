@@ -46,6 +46,7 @@ paper-bundle/
   source.pdf
   manifest.json
   summary.md
+  draft.pdf
   report.json
   extracted/
   assets/
@@ -57,6 +58,7 @@ At minimum include:
 
 - `target_language`
 - `status`
+- `asset_manifest_status`
 - `missing_sections`
 - `missing_assets`
 - `unreadable_regions`
@@ -81,3 +83,11 @@ Before writing `summary.md`, verify:
 - If `manifest.json` exists, do its status and flags match the visible asset set?
 
 If not, downgrade to partial output and make the gaps explicit.
+
+Before finishing the bundle, verify:
+
+- Is the header screenshot embedded in `summary.md`?
+- Are all available figures, tables, and formulas embedded in `summary.md`?
+- Does each visual block answer `是什么 / 可以发现什么 / 说明了什么`?
+- Does `summary.md` avoid discussing extraction strategy or crop quality?
+- Does `draft.pdf` render from the current `summary.md`?
