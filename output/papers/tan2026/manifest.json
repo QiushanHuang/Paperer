@@ -1,0 +1,143 @@
+{
+  "paper_slug": "tan2026",
+  "status": "partial",
+  "policy": {
+    "crop_bias": "prefer-larger-over-missing",
+    "dedupe": true,
+    "second_pass_review": true
+  },
+  "summary": {
+    "figure_count": 9,
+    "table_count": 2,
+    "formula_count": 1
+  },
+  "assets": [
+    {
+      "id": "fig-001",
+      "type": "figure",
+      "page": 3,
+      "path": "assets/figures/fig-001.png",
+      "caption_hint": "Fig. 1 geology map and ore district context",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-002",
+      "type": "figure",
+      "page": 4,
+      "path": "assets/figures/fig-002.png",
+      "caption_hint": "Fig. 2 geological section and Fig. 3 sample assemblages",
+      "quality_flags": [
+        "oversized_crop",
+        "possible_missed_sibling"
+      ]
+    },
+    {
+      "id": "fig-003",
+      "type": "figure",
+      "page": 6,
+      "path": "assets/figures/fig-003.png",
+      "caption_hint": "Fig. 4 microtextures of ore samples",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-004",
+      "type": "figure",
+      "page": 7,
+      "path": "assets/figures/fig-004.png",
+      "caption_hint": "Fig. 5 to Fig. 7 fluid inclusion photomicrographs",
+      "quality_flags": [
+        "oversized_crop",
+        "possible_missed_sibling"
+      ]
+    },
+    {
+      "id": "fig-005",
+      "type": "figure",
+      "page": 8,
+      "path": "assets/figures/fig-005.png",
+      "caption_hint": "Fig. 8 box plots and Table 1 microthermometric data",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-006",
+      "type": "figure",
+      "page": 9,
+      "path": "assets/figures/fig-006.png",
+      "caption_hint": "Fig. 9 histograms of homogenization temperatures and salinities",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-007",
+      "type": "figure",
+      "page": 10,
+      "path": "assets/figures/fig-007.png",
+      "caption_hint": "Fig. 10 Raman spectra of fluid inclusions",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-008",
+      "type": "figure",
+      "page": 11,
+      "path": "assets/figures/fig-008.png",
+      "caption_hint": "Fig. 11 isotope plot",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "fig-009",
+      "type": "figure",
+      "page": 12,
+      "path": "assets/figures/fig-009.png",
+      "caption_hint": "Fig. 12 salinity vs. homogenization temperature plots",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "table-001",
+      "type": "table",
+      "page": 8,
+      "path": "assets/tables/table-001.png",
+      "caption_hint": "Table 1 microthermometric data of fluid inclusions",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "table-002",
+      "type": "table",
+      "page": 11,
+      "path": "assets/tables/table-002.png",
+      "caption_hint": "Table 2 H-O isotope data for quartz",
+      "quality_flags": [
+        "oversized_crop"
+      ]
+    },
+    {
+      "id": "formula-001",
+      "type": "formula",
+      "page": 8,
+      "path": "assets/formulas/formula-001.png",
+      "caption_hint": "Quartz-water equation for δ18OH2O calculation",
+      "quality_flags": [
+        "oversized_crop",
+        "low_readability"
+      ]
+    }
+  ],
+  "global_flags": [
+    "possible_missed_sibling",
+    "low_readability"
+  ]
+}

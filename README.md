@@ -1,9 +1,9 @@
 # Paperer
 
-`Paperer` 是一个面向论文整理、文献总结与后续 slide 化处理的技能仓库。当前核心模块是 `literature-summary`：它接收**可读论文 PDF**，输出**高质量、结构化、可切换目标语言**的文献综述 Markdown，并配套生成截图素材与显式错误报告。
+`Paperer` 是一个面向论文整理、文献总结与后续 slide 化处理的技能仓库。当前核心模块是 `literature-summary` 与 `paper-asset-extraction`：前者负责把**可读论文 PDF**整理成**高质量、结构化、可切换目标语言**的文献综述 Markdown，后者负责更保守地提取图、表、公式资产，并用 `manifest.json` 显式记录质量风险。
 
 > **English summary**  
-> `Paperer` is a skill-first repository for turning readable research PDFs into polished literature briefs. The current core skill, `literature-summary`, produces a language-switchable `summary.md`, organizes visual assets such as header / figure / formula screenshots, and writes explicit completeness metadata in `report.json`.
+> `Paperer` is a skill-first repository for turning readable research PDFs into polished literature briefs. Its current core skills are `literature-summary` and `paper-asset-extraction`: one writes a language-switchable `summary.md`, and the other extracts conservative figure / table / formula assets with a `manifest.json` that makes uncertainty explicit.
 
 当前同步约定：
 
@@ -17,6 +17,7 @@
 - 输出是**研究简报式**文献总结，而不是粗糙笔记。
 - 支持 `target_language`，不强制所有输出保留中文。
 - 支持论文头图、关键图、表、公式等资产整理。
+- 新增 `paper-asset-extraction`，专门处理图、表、公式分割中的漏割、多割与裁切过紧风险。
 - 当提取不完整时，允许输出 `partial`，但必须同时写 `report.json`。
 - 为后续 slide 生成保留足够的结构与证据密度。
 
@@ -63,20 +64,34 @@
 ├── README.md
 ├── docs/
 │   └── superpowers/specs/
-│       └── 2026-03-30-literature-summary-skill-design.md
+│       ├── 2026-03-30-literature-summary-skill-design.md
+│       └── 2026-03-30-paper-asset-extraction-skill-design.md
+├── examples/
+│   ├── README.md
+│   ├── Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf
+│   └── Tan2026.pdf
 ├── skills/
-│   └── literature-summary/
+│   ├── literature-summary/
+│   │   ├── SKILL.md
+│   │   ├── agents/openai.yaml
+│   │   └── references/
+│   │       ├── bundle-contract.md
+│   │       ├── failure-rules.md
+│   │       ├── summary-template.md
+│   │       └── sync-policy.md
+│   └── paper-asset-extraction/
 │       ├── SKILL.md
 │       ├── agents/openai.yaml
 │       └── references/
-│           ├── bundle-contract.md
-│           ├── failure-rules.md
-│           ├── summary-template.md
-│           └── sync-policy.md
+│           ├── extraction-policy.md
+│           ├── integration-contract.md
+│           ├── manifest-schema.md
+│           └── quality-flags.md
 └── output/
     └── papers/
         └── <paper-slug>/
             ├── source.pdf
+            ├── manifest.json
             ├── summary.md
             ├── report.json
             ├── extracted/
@@ -86,11 +101,14 @@
 关键文件：
 
 - 技能定义：[`skills/literature-summary/SKILL.md`](skills/literature-summary/SKILL.md)
+- 资产提取技能：[`skills/paper-asset-extraction/SKILL.md`](skills/paper-asset-extraction/SKILL.md)
 - 输出模板：[`skills/literature-summary/references/summary-template.md`](skills/literature-summary/references/summary-template.md)
 - bundle 契约：[`skills/literature-summary/references/bundle-contract.md`](skills/literature-summary/references/bundle-contract.md)
 - 失败处理规则：[`skills/literature-summary/references/failure-rules.md`](skills/literature-summary/references/failure-rules.md)
 - 同步策略：[`skills/literature-summary/references/sync-policy.md`](skills/literature-summary/references/sync-policy.md)
 - 设计文档：[`docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md`](docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md)
+- 资产提取设计文档：[`docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md`](docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md)
+- 示例 PDF：[`examples/README.md`](examples/README.md)
 
 ## `literature-summary` 技能
 

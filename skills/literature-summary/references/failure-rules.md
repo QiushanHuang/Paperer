@@ -17,6 +17,7 @@ If extraction is incomplete:
 - keep the full section structure where possible
 - state which evidence is missing or unclear
 - record the same issue in `report.json`
+- propagate `manifest.json` uncertainty when present
 
 ## Visual handling rules
 
@@ -30,6 +31,12 @@ If the screenshot exists but interpretation is uncertain:
 
 - say that the interpretation is limited
 - avoid pretending the visual proves more than it does
+
+If `paper-asset-extraction` marked an asset with flags such as `tight_crop_risk`, `possible_missed_sibling`, or `low_readability`:
+
+- use the asset cautiously
+- lower the strength of the explanation
+- downgrade the paper-level output to `partial` when the uncertainty materially affects interpretation
 
 ## Formula-specific caution
 

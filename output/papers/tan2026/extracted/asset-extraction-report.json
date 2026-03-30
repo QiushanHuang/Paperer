@@ -1,0 +1,11 @@
+{
+  "status": "partial",
+  "warnings": [
+    "No standalone vector equation blocks were reliably detected; formula extraction is conservative and based on nearby displayed text.",
+    "Table 1 is dense and likely includes low-level OCR noise in the rendered crop; the crop is intentionally oversized to avoid truncation.",
+    "Figure pages contain multiple panel groups on some pages, so crops were widened to preserve labels and avoid missed subpanels."
+  ],
+  "notes": [
+    "All assets are kept even when the crop is imperfect, to preserve more information than a tighter crop would."
+  ]
+}

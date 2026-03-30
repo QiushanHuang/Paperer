@@ -2,15 +2,19 @@
 
 Normalize upstream extraction into a stable paper bundle before writing the final summary.
 
+If `paper-asset-extraction` is available, prefer its `manifest.json` and `extracted/asset-extraction-report.json` as the visual-asset contract.
+
 ## Expected bundle
 
 ```text
 paper-bundle/
   source.pdf
+  manifest.json
   extracted/
     fulltext.md
     metadata.json
     errors.json
+    asset-extraction-report.json
   assets/
     header/
       paper-header.png
@@ -31,6 +35,7 @@ paper-bundle/
 - screenshots for every detectable figure
 - screenshots for every detectable table
 - screenshots for every detectable formula
+- `manifest.json` when the paper used `paper-asset-extraction`
 
 ## Output artifacts
 
@@ -39,6 +44,7 @@ After writing the summary, the bundle should contain:
 ```text
 paper-bundle/
   source.pdf
+  manifest.json
   summary.md
   report.json
   extracted/
@@ -72,5 +78,6 @@ Before writing `summary.md`, verify:
 - Are figures, tables, and formulas all represented or explicitly missing?
 - Is metadata present and internally consistent?
 - Do extraction errors explain any missing content?
+- If `manifest.json` exists, do its status and flags match the visible asset set?
 
 If not, downgrade to partial output and make the gaps explicit.

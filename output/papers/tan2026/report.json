@@ -1,0 +1,16 @@
+{
+  "target_language": "Chinese",
+  "status": "partial",
+  "missing_sections": [],
+  "missing_assets": [],
+  "unreadable_regions": [
+    "formula crop on page 8 is intentionally conservative and not fully legible"
+  ],
+  "notes": [
+    "Bundle follows the conservative asset-extraction policy: larger crops are preferred over missing content.",
+    "Table 1 and Figure 5-7 are intentionally widened to reduce the chance of missed subpanels or clipped labels."
+  ],
+  "errors": [
+    "No separate standalone equation image blocks were recovered; formula handling is based on nearby displayed text and a conservative crop candidate."
+  ]
+}
