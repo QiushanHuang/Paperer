@@ -133,9 +133,11 @@
 配套输出：
 
 - `report.json`
+- `manifest.json` when conservative asset extraction is used
 - `extracted/fulltext.md`
 - `extracted/metadata.json`
 - `extracted/errors.json`
+- `extracted/asset-extraction-report.json` when `paper-asset-extraction` is used
 - `assets/header/*`
 - `assets/figures/*`
 - `assets/tables/*`
@@ -148,6 +150,32 @@
 - 图、表、公式不能只贴图，必须有简短解释
 - 不使用打分式推荐，而用 prose 做判断
 - 如果证据不足，必须明确标记，而不能强行编造
+
+## `paper-asset-extraction` 技能
+
+这个技能专门负责论文里的图、表、公式资产提取，并把结果整理成主 skill 可消费的保守 bundle。
+
+### 设计目标
+
+- 漏割风险高于裁切偏大
+- 多余边缘信息优于关键信息被截断
+- 不依赖人工修正
+- 用 `manifest.json` 显式暴露不确定性
+
+### 主输出
+
+- `assets/figures/*`
+- `assets/tables/*`
+- `assets/formulas/*`
+- `manifest.json`
+- `extracted/asset-extraction-report.json`
+
+### 关键约束
+
+- 优先保留完整视觉块，而不是追求过紧裁切
+- 对疑似重复、疑似漏割、类型不确定的资产打质量标记
+- 当资产集合明显不完整时返回 `partial`
+- `literature-summary` 默认优先消费这个 skill 的输出
 
 ## 真实论文验证样例
 
@@ -165,6 +193,11 @@
 - readable PDF -> extracted text
 - extracted text + visual assets -> polished `summary.md`
 - incomplete extraction -> explicit `report.json`
+
+同时，仓库根目录下的 [`examples/`](examples/) 保存了当前用于复现实验的原始 PDF：
+
+- [`examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`](examples/papers/Simulating%20Particle%20Dispersions%20in%20Nematic%20Liquid-Crystal%20Solvents.pdf)
+- [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
 
 ## 如何新增一篇论文 bundle
 
