@@ -57,8 +57,11 @@ If `target_language` is missing, ask for it before writing.
    The output must:
    - follow the selected language
    - read like a professional research brief
+   - treat each template bullet as a compact coverage prompt and answer it in polished prose
    - embed the header image and every available figure, table, and formula directly in the Markdown
-   - explain each visual in full sentences that naturally answer what it is, what can be observed, and what it shows for the paper's argument
+   - explain each figure in full sentences that make clear what it is, what can be observed, and what role it plays in the paper's argument
+   - explain each table in full sentences that identify the comparison target, key metrics, notable results, and why they matter
+   - explain each formula in full sentences that identify its role, prioritize core formulas when there are many, and avoid forced interpretation when the paper does not support one
    - keep evidence anchors mainly in technical sections
    - respect asset-level uncertainty from `manifest.json`
    - keep the prose focused on the paper itself rather than the extraction workflow
@@ -69,10 +72,7 @@ If `target_language` is missing, ask for it before writing.
 6. Write `report.json`.
    Record completeness, missing assets, unreadable regions, explicit errors, and any propagated uncertainty from `paper-asset-extraction`.
 
-7. Render a simple `draft.pdf` from `summary.md` for quick review.
-   It does not need final-design polish, but it must preserve headings, paragraphs, bullets, and embedded images well enough to inspect the summary as a document.
-
-8. If this skill is being authored in `Paperer`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `slidegen`.
+7. If this skill is being authored in `Paperer`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `slidegen`.
 
 ## Quick Reference
 
@@ -82,11 +82,10 @@ If `target_language` is missing, ask for it before writing.
 - Do not keep Chinese headings when the selected language is not Chinese.
 - Do not use ratings; explain judgment in prose.
 - Technical sections should include page, figure, table, or equation anchors when available.
-- Every figure, table, and formula block must be embedded and explained in full sentences that cover the same three questions.
+- Every figure, table, and formula block must be embedded and explained in complete prose, not labeled QA bullets.
 - `summary.md` should not talk about crop choices, screenshot quality, or similar process-side issues.
 - Separate the authors' claimed contribution from the paper's supported contribution.
 - If extraction is partial, still produce a clean summary and an explicit `report.json`.
-- Render `draft.pdf` after `summary.md`.
 
 ## Final Checks
 
@@ -101,7 +100,6 @@ Before finishing, confirm:
 - manifest-level quality flags are reflected in the prose and `report.json`
 - extraction-process details stay in `report.json`, not in the main summary prose
 - `report.json` matches the actual completeness of the bundle
-- `draft.pdf` exists and is readable
 
 ## Common Mistakes
 

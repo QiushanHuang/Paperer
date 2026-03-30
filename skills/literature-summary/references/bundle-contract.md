@@ -46,7 +46,6 @@ paper-bundle/
   source.pdf
   manifest.json
   summary.md
-  draft.pdf
   report.json
   extracted/
   assets/
@@ -88,6 +87,5 @@ Before finishing the bundle, verify:
 
 - Is the header screenshot embedded in `summary.md`?
 - Are all available figures, tables, and formulas embedded in `summary.md`?
-- Does each visual block answer `是什么 / 可以发现什么 / 说明了什么`?
+- Does each visual block explain, in complete prose, what the asset is, what matters in it, and how it supports the paper's argument?
 - Does `summary.md` avoid discussing extraction strategy or crop quality?
-- Does `draft.pdf` render from the current `summary.md`?

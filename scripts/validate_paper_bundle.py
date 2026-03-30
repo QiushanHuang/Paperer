@@ -18,6 +18,12 @@ PROCESS_TERMS = [
     "截图质量",
 ]
 
+DISALLOWED_VISUAL_LABEL_PATTERNS = [
+    r"(?m)^\s*[-*]\s*是什么[:：]?\s*$",
+    r"(?m)^\s*[-*]\s*可以发现什么[:：]?\s*$",
+    r"(?m)^\s*[-*]\s*说明了什么[:：]?\s*$",
+]
+
 
 def extract_markdown_images(summary_text: str) -> list[str]:
     return re.findall(r"!\[[^\]]*\]\(([^)]+)\)", summary_text)
@@ -45,6 +51,7 @@ def main() -> int:
     report_path = bundle / "report.json"
     summary_path = bundle / "summary.md"
     header_path = bundle / "assets" / "header" / "paper-header.png"
+    deprecated_draft_path = bundle / "draft.pdf"
 
     for required in [manifest_path, report_path, summary_path, header_path]:
         if not required.exists():
@@ -75,6 +82,14 @@ def main() -> int:
 
     if "asset_manifest_status" not in report:
         errors.append("report.json is missing asset_manifest_status")
+
+    if deprecated_draft_path.exists():
+        errors.append("Bundle still contains deprecated draft.pdf output")
+
+    for pattern in DISALLOWED_VISUAL_LABEL_PATTERNS:
+        if re.search(pattern, summary_text):
+            errors.append("Summary still uses literal visual QA labels instead of prose explanations")
+            break
 
     by_type: dict[str, list[tuple[int, dict]]] = {"figure": [], "table": [], "formula": []}
     for asset in manifest["assets"]:
