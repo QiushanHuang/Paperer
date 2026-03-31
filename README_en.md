@@ -10,75 +10,71 @@ For the Chinese version, see [README.md](README.md).
 - extracted text
 - header / figure / table / formula assets
 
-The recommended standard entry skill is:
+## Human Entry vs Agent Entry
 
-- [`paper-package-runner`](skills/paper-package-runner/SKILL.md)
+- Humans should start with this `README_en.md`
+- Agents and installers should start with [SKILL_PACKAGE.md](SKILL_PACKAGE.md)
+- The minimal distributable folder is [paperer-skill-package/](paperer-skill-package/)
+- The default entry skill is [`paper-package-runner`](skills/paper-package-runner/SKILL.md)
 
-It is responsible for:
-
-- fresh-machine bootstrap
-- checking whether the `Paperer` skills are already available
-- collecting the minimum required input
-- defaulting `target_language = Chinese`
-- deriving `paper_slug`
-- defaulting the output path to `output/papers/<paper-slug>/`
-- calling [`literature-summary`](skills/literature-summary/SKILL.md)
-- requiring [`literature-summary`](skills/literature-summary/SKILL.md) to prefer [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md)
-
-## Repository Role
-
-| Item | Value |
-|------|-------|
-| Source of truth | `Paperer` |
-| Mirror repo | `slidegen` |
-| Sync direction | `Paperer -> slidegen` |
+If the goal is simply to process a paper with the skills, do not start from maintainer docs and do not start by searching for `scripts/rebuild_*.py`.
 
 ## Core Skills
 
 | Skill | Role |
 |------|------|
-| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | Standard entry skill for fresh-machine bootstrap, minimal intake, default derivation, and orchestration |
+| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | Standard entry skill for minimal intake, default derivation, and orchestration |
 | [`literature-summary`](skills/literature-summary/SKILL.md) | Main brief-writing skill for `summary.md`, `report.json`, header image, and text extraction |
 | [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md) | Visual-asset extraction skill for `manifest.json` and figure/table/formula assets |
 
-## Unified Naming
+## Minimal Installation Rule
 
-This repo uses **paper package** as the preferred term for the full output directory of one paper:
+Normal users and fresh agents should obtain the minimal skill package, not the full repo.
 
-```text
-output/papers/<paper-slug>/
-```
+- Minimal directory URL:
+  - `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
+- Expected local directory name:
+  - `paperer-skill-package/`
+- Default entry file:
+  - `paperer-skill-package/skills/paper-package-runner/SKILL.md`
 
-It contains the source PDF, extracted artifacts, the final brief, and the status report.
+Only obtain the full repo if:
 
-Older notes may still say `bundle`. In this repo, `bundle` and `paper package` mean the same thing, but `paper package` is now the preferred term.
+- you are doing repo-maintainer rebuild or regression work
+- you need `scripts/rebuild_*.py` or `scripts/validate_paper_bundle.py`
+- you are editing `Paperer` skills, docs, or committed examples
 
 ## Fastest New-Machine Path
 
 If you want the fastest successful path on a new machine, use this flow:
 
-1. Make sure the current workspace already has the `Paperer` skills; if not, fetch `https://github.com/QiushanHuang/Paperer.git`
-2. Call `paper-package-runner`
-3. Provide only the paper PDF path
-4. Let the runner apply all built-in defaults and generate the paper package
+1. Check whether the current workspace already has the 3 `Paperer` production skills
+2. If not, obtain only `paperer-skill-package/`
+3. Call `paper-package-runner`
+4. Provide only the paper PDF path
 
-The following defaults are embedded in the skill:
+The following defaults are already embedded in the skills:
 
 - `target_language = Chinese`
 - automatic `paper_slug` derivation
-- default output root
-- default invocation order
+- default output path
 - built-in return contract
 
 ## Minimal Copyable Prompt
 
-You can now use only the following prompt:
-
 ```text
-If the current workspace does not already contain the `Paperer` skills, first fetch the `Paperer` repository or otherwise make the repo-local skills available from:
-https://github.com/QiushanHuang/Paperer.git
+If the current workspace does not already contain the `Paperer` skill package, first obtain only this directory from:
+https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package
 
-Then use the `paper-package-runner` skill from `Paperer` to generate a paper package for the PDF at `/absolute/path/to/your-paper.pdf`.
+After download, the expected local path is:
+paperer-skill-package/
+
+Then use the entry skill at:
+paperer-skill-package/skills/paper-package-runner/SKILL.md
+
+Do not use repo-maintainer files such as scripts/rebuild_*.py unless the task is repo maintenance.
+
+Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```
 
 That prompt is enough. The following are already embedded in the skill and do not need to be restated:
@@ -88,15 +84,6 @@ That prompt is enough. The following are already embedded in the skill and do no
 - default output root
 - default invocation order
 - default return fields
-
-## Real Example Prompt
-
-```text
-If the current workspace does not already contain the `Paperer` skills, first fetch the `Paperer` repository or otherwise make the repo-local skills available from:
-https://github.com/QiushanHuang/Paperer.git
-
-Then use the `paper-package-runner` skill from `Paperer` to generate a paper package for the PDF at `/Users/joshua/Downloads/219qiushan.pdf`.
-```
 
 ## Production Flow
 
@@ -109,13 +96,6 @@ paper-package-runner
   -> output/papers/<paper-slug>/
 ```
 
-This flow is:
-
-- user-facing
-- skill-driven
-- meant for real paper processing
-- not dependent on rebuild scripts
-
 ## Repo Test Flow
 
 The following flow is only for repo-maintainer testing:
@@ -127,11 +107,6 @@ examples/papers/*.pdf
   -> scripts/validate_paper_bundle.py
   -> logs/fix-logs/*.md
 ```
-
-In other words:
-
-- normal users start from `paper-package-runner`
-- maintainers start from `rebuild_*.py` and the validator
 
 ## Output File Guide
 
@@ -210,7 +185,6 @@ The current preview uses the committed `tan2026` example:
 The repo-side test PDFs live in [`examples/papers/`](examples/papers/):
 
 - [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
-- [`examples/papers/219qiushan.pdf`](examples/papers/219qiushan.pdf)
 - [`examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`](examples/papers/Simulating%20Particle%20Dispersions%20in%20Nematic%20Liquid-Crystal%20Solvents.pdf)
 
 These files are test inputs for repo reproducibility, not a required runtime location for normal users.
@@ -220,7 +194,6 @@ These files are test inputs for repo reproducibility, not a required runtime loc
 The committed example paper packages live in [`output/papers/`](output/papers/):
 
 - [`output/papers/tan2026/`](output/papers/tan2026/)
-- [`output/papers/219qiushan/`](output/papers/219qiushan/)
 - [`output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/)
 
 These are committed example outputs for regression checking and review.
@@ -232,7 +205,6 @@ These tools are not production skills. They are maintainer-facing rebuild and va
 | File | Purpose |
 |------|---------|
 | [`scripts/rebuild_tan2026_bundle.py`](scripts/rebuild_tan2026_bundle.py) | Rebuild the `tan2026` example package |
-| [`scripts/rebuild_219qiushan_bundle.py`](scripts/rebuild_219qiushan_bundle.py) | Rebuild the `219qiushan` example package |
 | [`scripts/rebuild_simulating_bundle.py`](scripts/rebuild_simulating_bundle.py) | Rebuild the `simulating` example package |
 | [`scripts/validate_paper_bundle.py`](scripts/validate_paper_bundle.py) | Validate package structure and contract rules |
 | [`logs/fix-logs/`](logs/fix-logs/) | Record repair and verification history |
@@ -243,45 +215,12 @@ These tools are not production skills. They are maintainer-facing rebuild and va
 .
 ├── README.md
 ├── README_en.md
+├── SKILL_PACKAGE.md
+├── paperer-skill-package/
 ├── docs/
-│   ├── superpowers/specs/
-│   └── superpowers/plans/
 ├── examples/
-│   ├── README.md
-│   └── papers/
 ├── logs/
-│   └── fix-logs/
+├── output/
 ├── scripts/
-│   ├── rebuild_219qiushan_bundle.py
-│   ├── rebuild_simulating_bundle.py
-│   ├── rebuild_tan2026_bundle.py
-│   └── validate_paper_bundle.py
-├── skills/
-│   ├── paper-package-runner/
-│   ├── literature-summary/
-│   └── paper-asset-extraction/
-└── output/
-    └── papers/
+└── skills/
 ```
-
-## Key References
-
-- [`skills/paper-package-runner/SKILL.md`](skills/paper-package-runner/SKILL.md)
-- [`skills/literature-summary/SKILL.md`](skills/literature-summary/SKILL.md)
-- [`skills/paper-asset-extraction/SKILL.md`](skills/paper-asset-extraction/SKILL.md)
-- [`skills/literature-summary/references/summary-template.md`](skills/literature-summary/references/summary-template.md)
-- [`skills/literature-summary/references/bundle-contract.md`](skills/literature-summary/references/bundle-contract.md)
-- [`skills/literature-summary/references/failure-rules.md`](skills/literature-summary/references/failure-rules.md)
-- [`docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md`](docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md)
-- [`docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md`](docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md)
-- [`docs/superpowers/specs/2026-03-31-paper-package-runner-skill-design.md`](docs/superpowers/specs/2026-03-31-paper-package-runner-skill-design.md)
-
-## Current Status
-
-The repo now includes:
-
-- `paper-package-runner` as the standard entry skill
-- `literature-summary` as the main brief-writing skill
-- `paper-asset-extraction` as the visual-asset extraction skill
-- reproducible example inputs and example outputs
-- a Chinese primary README and a separate English README

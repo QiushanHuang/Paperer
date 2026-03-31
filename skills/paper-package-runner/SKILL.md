@@ -1,6 +1,6 @@
 ---
 name: paper-package-runner
-description: Use when a readable paper PDF needs a portable entry workflow that can bootstrap the Paperer skills on a fresh machine, collect the minimum required inputs, and route the run through literature-summary and paper-asset-extraction.
+description: Use when a readable paper PDF needs the primary Paperer entry skill, especially when the current workspace may need the minimal `paperer-skill-package/` directory instead of the full repo.
 ---
 
 # Paper Package Runner
@@ -11,12 +11,15 @@ Use this as the primary entry skill for generating a paper package from a readab
 
 Core principle: ask only for the truly blocking input, default the rest safely, and route the run through the existing production skills instead of duplicating their logic.
 
+A fresh agent should start here rather than searching maintainer docs, repo README sections, or rebuild scripts first.
+
 ## When to Use
 
 Use this skill when:
 
 - the user wants the fastest normal path for processing a paper PDF
 - the user may be on a fresh machine or outside the `Paperer` workspace
+- the current workspace may need the minimal `paperer-skill-package/` directory
 - the user should not need to remember which production skill to call first
 - the user wants one portable prompt that can be reused across machines
 
@@ -45,10 +48,16 @@ Before asking the user anything beyond the PDF path:
    - `paper-package-runner`
    - `literature-summary`
    - `paper-asset-extraction`
-2. If the skills are already available, do not fetch the repo again.
-3. If the skills are not available, first obtain the `Paperer` repo or its skill package from:
-   - `https://github.com/QiushanHuang/Paperer.git`
-4. Do not send the user into repo-maintainer flows such as:
+2. If the skills are already available, do not fetch anything.
+3. If the skills are not available, obtain only the minimal `Paperer` skill package directory:
+   - GitHub directory:
+     - `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
+   - Expected local path after download:
+     - `paperer-skill-package/`
+   - Expected entry skill path:
+     - `paperer-skill-package/skills/paper-package-runner/SKILL.md`
+4. Do not fetch the full repo unless the task is repo-maintainer work or the user explicitly asks for full-repo artifacts.
+5. Do not send the user into repo-maintainer flows such as:
    - `examples/papers/*`
    - `scripts/rebuild_<slug>_bundle.py`
    - `scripts/validate_paper_bundle.py`
@@ -119,7 +128,7 @@ It must not:
 - Defaulted by the skill: `target_language=Chinese`
 - Derived by default: `paper_slug`, `output_root`
 - Default output path: `output/papers/<paper-slug>/`
-- Fresh machine rule: fetch `Paperer` skills first if they are not already available
+- Preferred install target on a fresh machine: `paperer-skill-package/`
 - Built-in return contract: output directory, `summary.md`, `report.json`, `manifest.json` when present, and final status
 
 ## Common Mistakes
@@ -128,6 +137,7 @@ It must not:
 |--------|------------|
 | Asking the user for every optional field up front | Ask only for `paper_pdf_path`; default `target_language` to `Chinese` and derive the rest unless overrides are needed. |
 | Starting normal usage from rebuild scripts | Rebuild scripts are for repo-maintainer testing, not the production entry path. |
-| Assuming the `Paperer` skills are already available on a fresh machine | First obtain the `Paperer` repo or its skill package when the production skills are missing. |
+| Fetching the full repo just to run the skills | Obtain only `paperer-skill-package/` unless maintainer files are actually needed. |
+| Assuming a fresh agent should read README first | Start from `paper-package-runner`, not from repo overview docs. |
 | Calling `paper-asset-extraction` as the only user-facing step | Use `paper-package-runner` as the entry and let `literature-summary` orchestrate the final package. |
 | Re-implementing summary or extraction logic in the wrapper | Keep this skill thin and delegate all core work to the existing production skills. |
