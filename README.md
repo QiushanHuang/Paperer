@@ -73,8 +73,17 @@
 ├── examples/
 │   ├── README.md
 │   └── papers/
+│       ├── 219qiushan.pdf
 │       ├── Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf
 │       └── Tan2026.pdf
+├── logs/
+│   └── fix-logs/
+│       └── *.md
+├── scripts/
+│   ├── rebuild_219qiushan_bundle.py
+│   ├── rebuild_simulating_bundle.py
+│   ├── rebuild_tan2026_bundle.py
+│   └── validate_paper_bundle.py
 ├── skills/
 │   ├── literature-summary/
 │   │   ├── SKILL.md
@@ -114,6 +123,200 @@
 - 设计文档：[`docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md`](docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md)
 - 资产提取设计文档：[`docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md`](docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md)
 - 示例 PDF：[`examples/README.md`](examples/README.md)
+- 重建脚本：[`scripts/`](scripts/)
+- 修复日志：[`logs/fix-logs/`](logs/fix-logs/)
+
+## 核心概念
+
+### 什么是 bundle
+
+`bundle` 是一篇论文在仓库里的**完整工作包**，路径固定为 `output/papers/<paper-slug>/`。
+
+它的作用是把一篇论文从输入到输出的关键产物放在一起，便于：
+
+- 复查这篇论文到底用了哪份源 PDF
+- 查看正文提取、图表公式提取和最终总结是否一致
+- 让后续 slide 生成或其他下游模块直接消费这些文件
+
+一个 bundle 通常由两个 skill 共同完成：
+
+- `paper-asset-extraction`
+  - 负责图、表、公式资产，以及 `manifest.json`
+- `literature-summary`
+  - 负责 `summary.md`、`report.json`，并消费上面的资产与文本提取结果
+
+bundle 的典型内容包括：
+
+- `source.pdf`
+  - 当前 bundle 对应的原论文 PDF
+- `summary.md`
+  - 面向阅读和后续 slide 化的论文简报主文件
+- `report.json`
+  - 记录这次输出是否 `complete / partial / failed`，以及缺失、风险和错误
+- `manifest.json`
+  - 图、表、公式的结构化清单，供主 skill 和下游模块消费
+- `extracted/fulltext.md`
+  - 提取出的正文文本
+- `extracted/metadata.json`
+  - 基础元数据，例如标题、页数、PDF 元数据
+- `extracted/errors.json`
+  - 文本提取阶段发现的错误和不确定项
+- `extracted/asset-extraction-report.json`
+  - 图、表、公式提取阶段的结构化报告
+- `assets/header/*`
+  - 页面标题区域头图
+- `assets/figures/*`
+  - figure 截图
+- `assets/tables/*`
+  - table 截图
+- `assets/formulas/*`
+  - formula 截图
+- `assets/pages/*`
+  - 调试用整页渲染图，便于复查截图来源
+
+### 什么是重建脚本
+
+`rebuild script` 是放在 `scripts/` 下的**仓库侧复现实验工具**，例如：
+
+- `scripts/rebuild_tan2026_bundle.py`
+- `scripts/rebuild_simulating_bundle.py`
+- `scripts/rebuild_219qiushan_bundle.py`
+
+它们的作用不是定义 skill 本身，而是：
+
+- 用固定的 example PDF 重建一个完整 bundle
+- 让仓库里的验证样例可以重复生成
+- 让修复前后能对比输出是否改善
+
+换句话说：
+
+- `skill` 是运行契约和行为规则
+- `rebuild script` 是为了仓库测试和样例复现而写的辅助代码
+
+这些脚本通常会做下面几件事：
+
+- 读取 `examples/papers/*.pdf`
+- 生成 `source.pdf`
+- 提取正文到 `extracted/fulltext.md`
+- 生成头图、figure、table、formula、page 级图片
+- 写 `manifest.json`
+- 写 `report.json`
+- 写 `summary.md`
+
+### 什么是修复和验证
+
+这里的 `修复` 和 `验证` 分成两层。
+
+第一层是 skill 侧修复：
+
+- `paper-asset-extraction`
+  - 负责修复图、表、公式的漏割、多割、编号不连续、混合裁切、裁切过紧等问题
+- `literature-summary`
+  - 负责修复总结内容本身，例如遗漏关键结论、把流程信息写进正文、图片未嵌入 Markdown、解释不够完整等问题
+
+第二层是仓库侧验证：
+
+- `scripts/validate_paper_bundle.py`
+  - 检查 bundle 结构是否完整
+  - 检查 `summary.md` 是否嵌入了所有应嵌入的资产
+  - 检查 `report.json` 是否含有关键字段
+  - 检查 figure / table 编号是否连续且与文件名一致
+  - 检查 summary 是否混入流程侧术语
+- `logs/fix-logs/*.md`
+  - 记录每一轮修复具体修了什么、为什么修、影响了哪些文件和样例
+
+## 实际调用流程
+
+如果之后是**实际调用 skill 来生成论文简报**，推荐把整个流程理解成下面几步。
+
+### 1. 用户输入
+
+用户提供：
+
+- 一篇 readable paper PDF
+- `target_language`
+- 可选的 `paper_slug`
+
+### 2. `literature-summary` 启动主流程
+
+主入口通常是 `literature-summary`。
+
+它负责组织整篇论文的最终输出，并优先调用 `paper-asset-extraction` 来处理视觉资产。
+
+### 3. `paper-asset-extraction` 生成视觉资产
+
+这个 skill 主要输出：
+
+- `assets/figures/*`
+- `assets/tables/*`
+- `assets/formulas/*`
+- `manifest.json`
+- `extracted/asset-extraction-report.json`
+
+这些文件的作用是：
+
+- 给 `literature-summary` 提供可嵌入的视觉资产
+- 给后续模块提供类型、页码、编号、质量标记等结构化信息
+
+### 4. `literature-summary` 补全文本与头图，并写最终简报
+
+这个 skill 继续生成：
+
+- `assets/header/paper-header.png`
+- `extracted/fulltext.md`
+- `extracted/metadata.json`
+- `extracted/errors.json`
+- `summary.md`
+- `report.json`
+
+这些文件的作用是：
+
+- `paper-header.png`
+  - 用在页面标题区，展示标题、期刊、作者、单位
+- `fulltext.md`
+  - 为总结和证据定位提供正文材料
+- `metadata.json`
+  - 保存论文基础信息
+- `errors.json`
+  - 保存提取阶段的问题
+- `summary.md`
+  - 最终的论文简报主文件
+- `report.json`
+  - 最终的状态报告，说明这次输出是否完整、缺了什么、有哪些风险
+
+### 5. 可选的仓库侧复现与验证
+
+如果是在仓库里维护 example 或回归测试，而不是一次性运行 skill，就会额外用到：
+
+- `scripts/rebuild_<slug>_bundle.py`
+  - 重建指定 example 的 bundle
+- `scripts/validate_paper_bundle.py`
+  - 对 bundle 做规则检查
+- `logs/fix-logs/*.md`
+  - 记录这一轮修复和验证的历史
+
+这里要区分清楚：
+
+- end-user 视角，核心是两个 skill
+- repo-maintainer 视角，还会用到 scripts 和 fix logs 来保证样例可复现、可验证
+
+### 输出文件与职责一览
+
+| File | Produced by | Purpose |
+|------|-------------|---------|
+| `source.pdf` | bundle assembly / rebuild script | 保存当前 bundle 对应的源 PDF |
+| `assets/header/paper-header.png` | `literature-summary` pipeline | 页面标题区头图 |
+| `assets/figures/*` | `paper-asset-extraction` | figure 资产 |
+| `assets/tables/*` | `paper-asset-extraction` | table 资产 |
+| `assets/formulas/*` | `paper-asset-extraction` | formula 资产 |
+| `assets/pages/*` | rebuild / debug pipeline | 整页调试图，方便回看截图来源 |
+| `extracted/fulltext.md` | `literature-summary` pipeline | 论文正文文本 |
+| `extracted/metadata.json` | `literature-summary` pipeline | 论文元数据 |
+| `extracted/errors.json` | `literature-summary` pipeline | 文本提取错误与不确定项 |
+| `extracted/asset-extraction-report.json` | `paper-asset-extraction` | 视觉资产提取阶段的结构化报告 |
+| `manifest.json` | `paper-asset-extraction` | 图表公式清单和质量标记 |
+| `summary.md` | `literature-summary` | 最终论文简报 |
+| `report.json` | `literature-summary` | 最终完成度与风险报告 |
 
 ## `literature-summary` 技能
 
@@ -184,7 +387,15 @@
 
 ## 真实论文验证样例
 
-当前仓库包含两篇真实论文的验证 bundle：
+当前仓库包含三篇真实论文的验证 bundle：
+
+- `219qiushan`
+  - PDF：[`source.pdf`](output/papers/219qiushan/source.pdf)
+  - 总结：[`summary.md`](output/papers/219qiushan/summary.md)
+  - 资产清单：[`manifest.json`](output/papers/219qiushan/manifest.json)
+  - 报告：[`report.json`](output/papers/219qiushan/report.json)
+  - 元数据：[`extracted/metadata.json`](output/papers/219qiushan/extracted/metadata.json)
+  - 正文提取：[`extracted/fulltext.md`](output/papers/219qiushan/extracted/fulltext.md)
 
 - `Tan2026`
   - PDF：[`source.pdf`](output/papers/tan2026/source.pdf)
@@ -201,7 +412,7 @@
   - 元数据：[`extracted/metadata.json`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/metadata.json)
   - 正文提取：[`extracted/fulltext.md`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/extracted/fulltext.md)
 
-这两个样例一起覆盖了当前 skill contract 的关键路径：
+这三个样例一起覆盖了当前 skill contract 的关键路径：
 
 - readable PDF -> extracted text
 - extracted text + visual assets -> polished `summary.md`
@@ -210,6 +421,7 @@
 
 同时，仓库根目录下的 [`examples/`](examples/) 与 [`examples/papers/`](examples/papers/) 保存了当前用于复现实验的原始 PDF：
 
+- [`examples/papers/219qiushan.pdf`](examples/papers/219qiushan.pdf)
 - [`examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`](examples/papers/Simulating%20Particle%20Dispersions%20in%20Nematic%20Liquid-Crystal%20Solvents.pdf)
 - [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
 
@@ -377,13 +589,13 @@ output/papers/<paper-slug>/source.pdf
 - `literature-summary` 技能初版
 - `paper-asset-extraction` 技能初版
 - 对应设计文档
-- 两篇真实论文 PDF 示例
-- 一篇真实论文的 bundle 验证样例
+- 三篇真实论文 PDF 示例
+- 三篇真实论文的 bundle 验证样例
 - README 升级版首页
 
 下一步更合适的工作通常是：
 
-- 用第二篇论文测试非中文目标语言路径
+- 用现有样例测试更多非中文目标语言路径
 - 收紧图 / 表 / 公式检测规则
 - 增加更稳定的提取与截图脚本
 - 明确哪些 bundle 产物需要长期留在仓库中，哪些只作为验证样例
