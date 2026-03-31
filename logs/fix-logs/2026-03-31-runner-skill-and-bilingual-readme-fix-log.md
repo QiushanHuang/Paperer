@@ -21,11 +21,17 @@
   - required inputs
   - derived defaults
   - runner handoff behavior
-- Rewrote `README.md` as a bilingual guide with:
-  - fresh-machine fast path near the top
+- Embedded the default runtime behavior into the skills:
+  - `target_language = Chinese` when omitted
+  - automatic `paper_slug` derivation
+  - default output-root derivation
+  - built-in return contract
+- Rewrote `README.md` back into a Chinese-primary guide with:
+  - the minimal fresh-machine prompt
   - runner-first production flow
-  - portable copyable prompts
+  - the shortest practical invocation path
   - a clearer split between production flow and repo test flow
+- Added `README_en.md` as the separate English guide.
 - Rewrote `examples/README.md` so example PDFs are clearly labeled as test inputs rather than required runtime files.
 
 ## Verification
