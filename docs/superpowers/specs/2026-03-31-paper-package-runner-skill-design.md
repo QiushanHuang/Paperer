@@ -39,10 +39,11 @@ It should not duplicate the extraction or summary logic. Instead, it should:
 
 1. verify that the required `Paperer` skills are available
 2. bootstrap skill access when they are not already available
-3. collect the minimum runtime inputs
-4. derive safe defaults for optional inputs
-5. call `literature-summary`
-6. require `literature-summary` to prefer `paper-asset-extraction`
+3. run a fast preflight so the user only gets asked for truly blocking inputs
+4. collect the minimum runtime inputs
+5. derive safe defaults for optional inputs
+6. call `literature-summary`
+7. require `literature-summary` to prefer `paper-asset-extraction`
 
 ## Role Boundaries
 
@@ -52,6 +53,7 @@ Responsible for:
 
 - portable entry behavior
 - environment and skill-availability checks
+- fast-path preflight for new-machine usage
 - runtime intake
 - default generation
 - invocation order
@@ -109,6 +111,26 @@ The new wrapper skill must enforce the following:
 
 The goal is that the user only has to supply the paper path and the target language in the common case.
 
+## Preflight Optimization Rules
+
+The wrapper skill should optimize for the fastest successful path on a fresh machine.
+
+It must:
+
+- check skill availability before asking unnecessary questions
+- avoid asking for optional fields that can be derived safely
+- derive `paper_slug` automatically unless the user explicitly overrides it
+- default the output root automatically unless the user explicitly overrides it
+- avoid sending the user into repo-maintainer flows such as rebuild scripts
+
+The intended fast path is:
+
+1. ensure the required skills are accessible
+2. collect `paper_pdf_path`
+3. collect `target_language`
+4. derive everything else unless the user wants overrides
+5. run the package generation flow
+
 ## Bootstrap Rules
 
 The wrapper skill must support portable usage across machines.
@@ -123,6 +145,8 @@ If the current environment does not already contain the `Paperer` skill package:
 This behavior should be described inside the skill and reflected in the README copyable prompt.
 
 The wrapper should not assume the repo is already the current working directory.
+
+This bootstrap behavior should be written so that another user can paste the README prompt on a different machine and still get the correct entry flow.
 
 ## Invocation Contract
 
@@ -171,6 +195,8 @@ The README should be updated so that:
 4. the prompt still makes clear that:
    - `literature-summary` is the main brief-writing skill
    - `paper-asset-extraction` is the preferred visual-asset skill
+5. the README itself is written as a full bilingual document, with both Chinese and English explanations for the main usage sections
+6. the fastest new-machine path is visible near the top of the README, not buried under repo-maintainer sections
 
 ## Files To Add Or Update
 
@@ -184,7 +210,7 @@ The README should be updated so that:
 
 - `skills/literature-summary/SKILL.md`
 - `README.md`
-- `examples/README.md` only if the new entry flow needs to be referenced there
+- `examples/README.md`
 
 ## Non-Goals
 
@@ -202,8 +228,10 @@ This design is successful if:
 - a user can start from one wrapper skill instead of remembering two production skills
 - the wrapper asks for missing critical inputs instead of silently assuming them
 - the wrapper works as a portable entry prompt across machines
+- the wrapper gives a minimal-question fast path on a fresh machine
 - the wrapper keeps production flow separate from repo test flow
 - the README copyable prompt now reflects the wrapper-based entry path
+- the README is fully bilingual for the primary usage guidance
 - the implementation remains thin and does not fork core logic
 
 ## Risks
