@@ -15,6 +15,8 @@ Core principle: polished partial output is better than confident fabrication.
 
 Use this skill when the user wants a structured literature summary from a readable paper PDF, in a specified language, with visual explanation blocks and explicit handling of missing extraction.
 
+For the fastest fresh-machine and minimal-input entry path, prefer `paper-package-runner` as the wrapper skill and let it call this skill.
+
 Do not use this skill when:
 
 - the input is not a paper PDF
@@ -23,15 +25,24 @@ Do not use this skill when:
 
 ## Required Inputs
 
-- one readable PDF
+- one readable paper PDF or an explicit `paper_pdf_path`
 - `target_language`
 
 Optional:
 
-- stable paper slug or paper id
+- `paper_slug`
+- `output_root`
 - user reading focus
 
-If `target_language` is missing, ask for it before writing.
+## Standard Intake
+
+- If the paper PDF or `paper_pdf_path` is missing, ask for it before writing.
+- If `target_language` is missing, ask for it before writing.
+- If `paper_slug` is missing, derive it from the PDF filename when possible.
+- If `output_root` is missing, default to `output/papers/<paper-slug>/`.
+- If user reading focus is missing, continue without it.
+
+If this skill is called from `paper-package-runner`, accept the wrapper's derived defaults unless the user has explicitly requested overrides.
 
 ## Workflow
 
@@ -77,6 +88,7 @@ If `target_language` is missing, ask for it before writing.
 
 ## Quick Reference
 
+- For portable or fresh-machine entry, start with `paper-package-runner`.
 - The displayed page title is always the Chinese translation of the paper's English title.
 - Aside from that title rule, output language follows `target_language`.
 - Prefer `paper-asset-extraction` for figures, tables, and formulas.
@@ -109,6 +121,7 @@ Before finishing, confirm:
 |--------|------------|
 | Summarizing only the abstract | Read the full available paper text and use the visuals. |
 | Ignoring `manifest.json` quality flags | Propagate uncertainty into both explanation strength and `report.json`. |
+| Asking the user for `paper_slug` or `output_root` even when they are derivable | Derive `paper_slug` from the PDF filename and default the output root unless the user asks to override them. |
 | Keeping Chinese headings for every language | Localize the whole report to `target_language` unless the user asks for bilingual output. |
 | Dumping screenshots without interpretation | Every visual block needs a short explanation and its role in the argument. |
 | Guessing missing method or formula details | Mark uncertainty explicitly and record it in `report.json`. |

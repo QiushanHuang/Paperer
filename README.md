@@ -1,91 +1,274 @@
 # Paperer
 
-`Paperer` 是一个面向论文简报生成的 skill-first 仓库。它的目标不是只做 abstract summary，而是把一篇 **readable research PDF** 组织成一份可读、可复查、可继续 slide 化的论文简报 package。
+## 中文简介
 
-> **English summary**  
-> `Paperer` is a skill-first repository for turning readable research PDFs into polished literature briefs with structured visual assets. The main skills are `literature-summary` and `paper-asset-extraction`.
+`Paperer` 是一套面向论文处理的 skill-first 工作流。它的目标不是只做 abstract summary，而是把一篇 **readable research PDF** 处理成一份完整的 **paper package**，其中包含：
 
-## Repository Role
+- `summary.md`
+- `report.json`
+- `manifest.json`
+- extracted text
+- header / figure / table / formula assets
 
-| Item | Value |
+现在推荐的标准入口 skill 是：
+
+- `paper-package-runner`
+
+它会负责新电脑启动、关键参数补问、默认值推断，以及调用：
+
+- `literature-summary`
+- `paper-asset-extraction`
+
+## English Introduction
+
+`Paperer` is a skill-first workflow for turning a readable research PDF into a complete **paper package**, not just an abstract-level summary. A paper package contains the final literature brief, structured reports, extracted text, and visual assets for figures, tables, formulas, and the paper header.
+
+The recommended primary entry skill is:
+
+- `paper-package-runner`
+
+It handles fresh-machine bootstrap, required-input intake, safe default generation, and the orchestration of:
+
+- `literature-summary`
+- `paper-asset-extraction`
+
+## 仓库角色 / Repository Role
+
+| 项目 / Item | 值 / Value |
 |------|-------|
-| Source of truth | `Paperer` |
-| Mirror repo | `slidegen` |
-| Sync direction | `Paperer -> slidegen` |
+| 源仓库 / Source of truth | `Paperer` |
+| 镜像仓库 / Mirror repo | `slidegen` |
+| 同步方向 / Sync direction | `Paperer -> slidegen` |
 
-## What This Repo Contains
+## 核心技能 / Core Skills
 
-This repo contains three different layers. They serve different purposes and should not be confused.
+| Skill | 中文说明 | English role |
+|------|----------|--------------|
+| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | 标准入口 skill，负责新电脑 bootstrap、最小参数采集、默认值推断和调用顺序 | Primary entry skill for fresh-machine bootstrap, minimal intake, default derivation, and orchestration |
+| [`literature-summary`](skills/literature-summary/SKILL.md) | 主总结 skill，负责 `summary.md`、`report.json`、头图、文本提取 | Main brief-writing skill for `summary.md`, `report.json`, header image, and text extraction |
+| [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md) | 图表公式提取 skill，负责 `manifest.json` 和视觉资产 | Conservative visual-asset extraction skill for `manifest.json` and figure/table/formula assets |
 
-| Layer | What it is | Used in actual paper runs | Used in repo testing |
-|------|------------|---------------------------|----------------------|
-| Skills | Reusable behavior contracts | Yes | Yes |
-| Example inputs | Real PDF files committed for repeatable checks | No | Yes |
-| Rebuild / validation scripts | Repo-maintainer utilities for reproducing example outputs | No | Yes |
+## 统一术语 / Unified Naming
 
-## Unified Naming
+### 中文
 
-This repo now uses **paper package** as the unified term.
-
-### `paper package`
-
-A `paper package` is the full output directory for one paper:
+本仓库统一使用 **paper package** 这个术语，表示一篇论文的完整输出目录：
 
 ```text
 output/papers/<paper-slug>/
 ```
 
-It contains the source PDF copy, extracted text, visual assets, the final summary, and the status report.
+它包含源 PDF、副产物、最终总结和状态报告。
 
-Older notes may still say `bundle`. In this repo, `bundle` and `paper package` refer to the same thing, but **`paper package` is now the preferred name**.
+### English
 
-Some existing script filenames still use `bundle` for backward compatibility. The naming rule above is about repo terminology, not a forced rename of every existing file.
+This repo uses **paper package** as the preferred term for the full output directory of one paper:
 
-### `example paper package`
+```text
+output/papers/<paper-slug>/
+```
 
-An `example paper package` is a committed, reproducible sample under `output/papers/<paper-slug>/` that exists for validation and regression checking.
+Older notes may still say `bundle`. In this repo, `bundle` and `paper package` mean the same thing, but `paper package` is now the preferred name.
 
-Examples in this repo:
+## 新电脑最快路径 / Fastest New-Machine Path
 
-- `tan2026`
-- `219qiushan`
-- `simulating-particle-dispersions-in-nematic-liquid-crystal-solvents`
+### 中文
 
-### `runtime paper package`
+如果你在一台新电脑上，想最高效地用这套 skill 处理论文，推荐路径只有 4 步：
 
-A `runtime paper package` is what the agent produces when you actually run the skill on a real paper path.
+1. 确保当前工作区已经有 `Paperer` 的 skill；如果没有，先获取 `https://github.com/QiushanHuang/Paperer.git`
+2. 调用 `paper-package-runner`
+3. 只提供：
+   - 论文 PDF 路径
+   - `target_language`
+4. 让 runner 自动：
+   - 推断 `paper_slug`
+   - 默认输出到 `output/papers/<paper-slug>/`
+   - 调用 `literature-summary`
+   - 让 `literature-summary` 优先调用 `paper-asset-extraction`
 
-In other words:
+### English
 
-- `example paper package` = repo-maintainer test artifact
-- `runtime paper package` = actual output of a real skill run
+On a fresh machine, the fastest normal path is:
 
-The directory shape is the same. The difference is **why it exists**.
+1. Make sure the `Paperer` skills are available in the current workspace; if not, fetch `https://github.com/QiushanHuang/Paperer.git`
+2. Call `paper-package-runner`
+3. Provide only:
+   - the paper PDF path
+   - `target_language`
+4. Let the runner:
+   - derive `paper_slug`
+   - default the output root to `output/papers/<paper-slug>/`
+   - call `literature-summary`
+   - require `literature-summary` to prefer `paper-asset-extraction`
 
-## Core Skills
+## 可复制提示词（中文） / Copyable Prompt (Chinese)
 
-| Skill | Role | Used directly by user | Main outputs |
-|------|------|-----------------------|--------------|
-| [`literature-summary`](skills/literature-summary/SKILL.md) | Main paper-brief generation skill | Yes | `summary.md`, `report.json`, header image, extracted text |
-| [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md) | Conservative figure / table / formula extraction skill | Usually called by `literature-summary` first | `manifest.json`, `assets/figures/*`, `assets/tables/*`, `assets/formulas/*`, `asset-extraction-report.json` |
+```text
+如果当前工作区还没有 `Paperer` 的 skills，请先获取 `Paperer` 仓库，或者先让这些 repo-local skills 在当前工作区可用：
+https://github.com/QiushanHuang/Paperer.git
 
-## Repo Utilities
+然后调用 `Paperer` 里的 `paper-package-runner` skill，对路径 `/absolute/path/to/your-paper.pdf` 的论文 PDF 生成一个 paper package。
 
-These are **not skills**. They are repo-maintainer utilities for example regeneration and validation.
+要求：
+- target_language: Chinese
+- 如果缺少 `paper_slug`，就根据 PDF 文件名自动推断
+- 如果缺少 `output_root`，就默认写到 `output/papers/<paper-slug>/`
+- 让 `paper-package-runner` 调用 `literature-summary`
+- 让 `literature-summary` 优先调用 `paper-asset-extraction`
+- 在 `summary.md` 中直接嵌入 header image 以及所有提取到的 figure、table、formula
+- summary 内容只聚焦论文本身，不讨论提取流程
+- 如果证据不完整，就把 package 标记为 `partial`，不要编造内容
 
-| File | Type | Purpose |
-|------|------|---------|
-| [`scripts/rebuild_tan2026_bundle.py`](scripts/rebuild_tan2026_bundle.py) | rebuild script | Rebuild the `tan2026` example paper package |
-| [`scripts/rebuild_219qiushan_bundle.py`](scripts/rebuild_219qiushan_bundle.py) | rebuild script | Rebuild the `219qiushan` example paper package |
-| [`scripts/rebuild_simulating_bundle.py`](scripts/rebuild_simulating_bundle.py) | rebuild script | Rebuild the `simulating` example paper package |
-| [`scripts/validate_paper_bundle.py`](scripts/validate_paper_bundle.py) | validator | Check whether a paper package matches repo rules |
-| [`logs/fix-logs/`](logs/fix-logs/) | fix history | Record what was fixed, why, and how it was verified |
+最后请返回：
+- 输出目录路径
+- `summary.md`、`report.json`、`manifest.json` 的路径
+- 最终状态是 `complete`、`partial` 还是 `failed`
+```
 
-## Preview
+## Copyable Prompt (English) / 可复制提示词（英文）
 
-The preview below uses the committed **example paper package** for `tan2026`.
+```text
+If the current workspace does not already contain the `Paperer` skills, first fetch the `Paperer` repository or otherwise make the repo-local skills available from:
+https://github.com/QiushanHuang/Paperer.git
 
-- Example source PDF: [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
+Then use the `paper-package-runner` skill from `Paperer` to generate a paper package for the PDF at `/absolute/path/to/your-paper.pdf`.
+
+Requirements:
+- target_language: English
+- if `paper_slug` is missing, derive it from the PDF filename
+- if `output_root` is missing, default to `output/papers/<paper-slug>/`
+- have `paper-package-runner` call `literature-summary`
+- have `literature-summary` prefer `paper-asset-extraction`
+- embed the header image and every extracted figure, table, and formula directly in `summary.md`
+- keep the summary focused on the paper itself, not the extraction process
+- if evidence is incomplete, mark the package `partial` instead of inventing content
+
+At the end, return:
+- the output directory path
+- the paths to `summary.md`, `report.json`, and `manifest.json`
+- whether the final package is `complete`, `partial`, or `failed`
+```
+
+## 实例提示词 / Real Example Prompt
+
+```text
+如果当前工作区还没有 `Paperer` 的 skills，请先获取 `Paperer` 仓库，或者先让这些 repo-local skills 在当前工作区可用：
+https://github.com/QiushanHuang/Paperer.git
+
+然后调用 `Paperer` 里的 `paper-package-runner` skill，对路径 `/Users/joshua/Downloads/219qiushan.pdf` 的论文 PDF 生成一个 paper package。
+
+要求：
+- target_language: Chinese
+- 如果缺少 `paper_slug`，就根据 PDF 文件名自动推断
+- 如果缺少 `output_root`，就默认写到 `output/papers/<paper-slug>/`
+- 让 `paper-package-runner` 调用 `literature-summary`
+- 让 `literature-summary` 优先调用 `paper-asset-extraction`
+- 在 `summary.md` 中直接嵌入 header image 以及所有提取到的 figure、table、formula
+- summary 内容只聚焦论文本身，不讨论提取流程
+- 如果证据不完整，就把 package 标记为 `partial`，不要编造内容
+
+最后请返回：
+- 输出目录路径
+- `summary.md`、`report.json`、`manifest.json` 的路径
+- 最终状态是 `complete`、`partial` 还是 `failed`
+```
+
+## 实际流程 / Production Flow
+
+### 中文
+
+正常用户的实际流程应当是：
+
+```text
+paper-package-runner
+  -> literature-summary
+     -> paper-asset-extraction
+  -> output/papers/<paper-slug>/
+```
+
+### English
+
+The normal production flow is:
+
+```text
+paper-package-runner
+  -> literature-summary
+     -> paper-asset-extraction
+  -> output/papers/<paper-slug>/
+```
+
+## 仓库测试流程 / Repo Test Flow
+
+### 中文
+
+以下流程只给仓库维护者使用，不是普通用户的入口：
+
+```text
+examples/papers/*.pdf
+  -> scripts/rebuild_<slug>_bundle.py
+  -> output/papers/<paper-slug>/
+  -> scripts/validate_paper_bundle.py
+  -> logs/fix-logs/*.md
+```
+
+### English
+
+The following flow is for repo-maintainer testing only, not for normal user runs:
+
+```text
+examples/papers/*.pdf
+  -> scripts/rebuild_<slug>_bundle.py
+  -> output/papers/<paper-slug>/
+  -> scripts/validate_paper_bundle.py
+  -> logs/fix-logs/*.md
+```
+
+## 输出文件说明 / Output File Guide
+
+| File | Produced by | 用途 / Purpose |
+|------|-------------|----------------|
+| `source.pdf` | runtime assembly or rebuild script | 当前 paper package 对应的源 PDF / Source paper copy |
+| `assets/header/paper-header.png` | `literature-summary` | 页面标题区头图 / Header image for the title block |
+| `assets/figures/*` | `paper-asset-extraction` | figure 资产 / Figure assets |
+| `assets/tables/*` | `paper-asset-extraction` | table 资产 / Table assets |
+| `assets/formulas/*` | `paper-asset-extraction` | formula 资产 / Formula assets |
+| `assets/pages/*` | rebuild/debug utilities | 调试整页图 / Full-page debug renders |
+| `extracted/fulltext.md` | `literature-summary` | 正文提取文本 / Extracted paper text |
+| `extracted/metadata.json` | `literature-summary` | 基础元数据 / Paper metadata |
+| `extracted/errors.json` | `literature-summary` | 文本提取问题 / Text extraction issues |
+| `extracted/asset-extraction-report.json` | `paper-asset-extraction` | 图表公式提取报告 / Visual extraction report |
+| `manifest.json` | `paper-asset-extraction` | 资产清单与质量标记 / Structured asset manifest and quality flags |
+| `summary.md` | `literature-summary` | 最终论文简报 / Final literature brief |
+| `report.json` | `literature-summary` | 最终状态与风险报告 / Final package status and risk report |
+
+## Paper Package Structure / Paper Package 目录结构
+
+```text
+output/papers/<paper-slug>/
+├── source.pdf
+├── manifest.json
+├── summary.md
+├── report.json
+├── extracted/
+│   ├── fulltext.md
+│   ├── metadata.json
+│   ├── errors.json
+│   └── asset-extraction-report.json
+└── assets/
+    ├── header/
+    │   └── paper-header.png
+    ├── figures/
+    ├── tables/
+    ├── formulas/
+    └── pages/
+```
+
+## 样例预览 / Example Preview
+
+当前 README 的预览使用仓库内置样例 `tan2026`：
+
+- Example input PDF: [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
 - Example output package: [`output/papers/tan2026/`](output/papers/tan2026/)
 
 ### Header Preview
@@ -113,247 +296,48 @@ The preview below uses the committed **example paper package** for `tan2026`.
   </tr>
 </table>
 
-This example demonstrates:
+## 样例输入 / Example Inputs
 
-- readable PDF -> extracted text
-- header crop generation
-- conservative figure / table / formula extraction
-- manifest-driven visual audit
-- polished Chinese literature brief
-
-## Actual Flow Vs Test Flow
-
-### Actual Flow
-
-This is the flow you care about when you want the agent to process a new paper.
-
-```text
-Your paper PDF
-  -> literature-summary
-     -> paper-asset-extraction (preferred visual pipeline)
-  -> output/papers/<paper-slug>/
-     -> summary.md
-     -> report.json
-     -> manifest.json
-     -> extracted/*
-     -> assets/*
-```
-
-Characteristics:
-
-- user-facing
-- skill-driven
-- meant for real papers
-- does not require rebuild scripts
-
-### Test Flow
-
-This is the flow the repo maintainer uses to keep committed examples reproducible.
-
-```text
-examples/papers/*.pdf
-  -> scripts/rebuild_<slug>_bundle.py
-  -> output/papers/<paper-slug>/
-  -> scripts/validate_paper_bundle.py
-  -> logs/fix-logs/*.md
-```
-
-Characteristics:
-
-- repo-maintainer-facing
-- script-driven
-- meant for regression checks and examples
-- not the recommended way for normal end-user runs
-
-## How The Actual Skill Run Works
-
-### Step 1: Input
-
-Provide:
-
-- one readable paper PDF
-- `target_language`
-- optionally a stable `paper_slug`
-- optionally a reading focus
-
-### Step 2: Main entry is `literature-summary`
-
-The normal entry point is [`skills/literature-summary/SKILL.md`](skills/literature-summary/SKILL.md).
-
-It is responsible for the final paper brief and the final package shape.
-
-### Step 3: `literature-summary` prefers `paper-asset-extraction`
-
-Before writing the summary, the main skill should call [`skills/paper-asset-extraction/SKILL.md`](skills/paper-asset-extraction/SKILL.md) as the preferred visual pipeline.
-
-That skill produces:
-
-- `assets/figures/*`
-- `assets/tables/*`
-- `assets/formulas/*`
-- `manifest.json`
-- `extracted/asset-extraction-report.json`
-
-### Step 4: `literature-summary` completes the package
-
-The main skill then completes the rest of the paper package:
-
-- `assets/header/paper-header.png`
-- `extracted/fulltext.md`
-- `extracted/metadata.json`
-- `extracted/errors.json`
-- `summary.md`
-- `report.json`
-
-### Step 5: Final output
-
-A complete or partial paper package is written to:
-
-```text
-output/papers/<paper-slug>/
-```
-
-## Output File Guide
-
-| File | Produced by | Purpose |
-|------|-------------|---------|
-| `source.pdf` | runtime assembly or rebuild script | The source paper copied into the package |
-| `assets/header/paper-header.png` | `literature-summary` | Header image for the title block |
-| `assets/figures/*` | `paper-asset-extraction` | Figure assets |
-| `assets/tables/*` | `paper-asset-extraction` | Table assets |
-| `assets/formulas/*` | `paper-asset-extraction` | Formula assets |
-| `assets/pages/*` | rebuild/debug utilities | Full-page debug renders for review |
-| `extracted/fulltext.md` | `literature-summary` | Extracted paper text |
-| `extracted/metadata.json` | `literature-summary` | Paper metadata |
-| `extracted/errors.json` | `literature-summary` | Text extraction issues |
-| `extracted/asset-extraction-report.json` | `paper-asset-extraction` | Visual extraction report |
-| `manifest.json` | `paper-asset-extraction` | Structured asset manifest and quality flags |
-| `summary.md` | `literature-summary` | Final literature brief |
-| `report.json` | `literature-summary` | Final package status and risk report |
-
-## Package Structure
-
-```text
-output/papers/<paper-slug>/
-├── source.pdf
-├── manifest.json
-├── summary.md
-├── report.json
-├── extracted/
-│   ├── fulltext.md
-│   ├── metadata.json
-│   ├── errors.json
-│   └── asset-extraction-report.json
-└── assets/
-    ├── header/
-    │   └── paper-header.png
-    ├── figures/
-    ├── tables/
-    ├── formulas/
-    └── pages/
-```
-
-## Example Inputs
-
-Committed example inputs live in [`examples/papers/`](examples/papers/):
+用于仓库测试的样例 PDF 在 [`examples/papers/`](examples/papers/)：
 
 - [`examples/papers/Tan2026.pdf`](examples/papers/Tan2026.pdf)
 - [`examples/papers/219qiushan.pdf`](examples/papers/219qiushan.pdf)
 - [`examples/papers/Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`](examples/papers/Simulating%20Particle%20Dispersions%20in%20Nematic%20Liquid-Crystal%20Solvents.pdf)
 
-These are **test inputs for reproducible repo examples**, not special files required by the skills themselves.
+These files are reproducible repo-side test inputs, not a required runtime location for normal users.
 
-## Example Output Packages
+## 样例输出 / Example Output Packages
 
-Committed example output packages live in [`output/papers/`](output/papers/):
+当前提交的 example paper packages 在 [`output/papers/`](output/papers/)：
 
 - [`output/papers/tan2026/`](output/papers/tan2026/)
 - [`output/papers/219qiushan/`](output/papers/219qiushan/)
 - [`output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/`](output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/)
 
-These are **example paper packages used for testing and regression review**.
+These are committed example outputs for testing and regression review.
 
-## How To Use The Skill In Practice
+## 仓库维护工具 / Repo Utilities
 
-### If you are working inside this repo
+这些工具不是技能本身，而是维护者使用的复现和验证工具。
 
-You do not need a separate install step for the repo-local skills. Ask the agent to use:
+These utilities are not production skills. They are maintainer-facing rebuild and validation helpers.
 
-- `literature-summary`
-- `paper-asset-extraction`
+| File | 中文作用 | English purpose |
+|------|----------|-----------------|
+| [`scripts/rebuild_tan2026_bundle.py`](scripts/rebuild_tan2026_bundle.py) | 重建 `tan2026` 样例 package | Rebuild the `tan2026` example package |
+| [`scripts/rebuild_219qiushan_bundle.py`](scripts/rebuild_219qiushan_bundle.py) | 重建 `219qiushan` 样例 package | Rebuild the `219qiushan` example package |
+| [`scripts/rebuild_simulating_bundle.py`](scripts/rebuild_simulating_bundle.py) | 重建 `simulating` 样例 package | Rebuild the `simulating` example package |
+| [`scripts/validate_paper_bundle.py`](scripts/validate_paper_bundle.py) | 校验 package 结构和约束 | Validate package structure and contract rules |
+| [`logs/fix-logs/`](logs/fix-logs/) | 记录每轮修复与验证 | Record repair and verification history |
 
-The recommended pattern is:
-
-1. start from `literature-summary`
-2. let it call `paper-asset-extraction` first for visual assets
-3. write the final package under `output/papers/<paper-slug>/`
-
-### Copyable Prompt
-
-Use the prompt below as a starting point when you want the agent to process a real PDF path.
-
-```text
-Use the `literature-summary` skill to generate a complete paper package for the PDF at `/absolute/path/to/your-paper.pdf`.
-
-Requirements:
-- target_language: Chinese
-- paper_slug: replace-this-with-your-slug
-- use `paper-asset-extraction` as the preferred visual-asset pipeline
-- write the output to `output/papers/replace-this-with-your-slug/`
-- the displayed page title must be the Chinese translation of the paper's English title
-- embed the header image and every extracted figure, table, and formula directly in `summary.md`
-- keep the summary focused on the paper itself, not the extraction process
-- write `summary.md`, `report.json`, `manifest.json`, `extracted/fulltext.md`, `extracted/metadata.json`, `extracted/errors.json`, and `extracted/asset-extraction-report.json`
-- if evidence is incomplete, mark the package `partial` instead of inventing content
-- run package validation if the validator is available
-
-At the end, return:
-- the output directory path
-- the paths to `summary.md`, `report.json`, and `manifest.json`
-- whether the final package is `complete`, `partial`, or `failed`
-```
-
-### Example With A Real Path
-
-```text
-Use the `literature-summary` skill to generate a complete paper package for the PDF at `/Users/joshua/Downloads/219qiushan.pdf`.
-
-Requirements:
-- target_language: Chinese
-- paper_slug: 219qiushan
-- use `paper-asset-extraction` as the preferred visual-asset pipeline
-- write the output to `output/papers/219qiushan/`
-- the displayed page title must be the Chinese translation of the paper's English title
-- embed the header image and every extracted figure, table, and formula directly in `summary.md`
-- keep the summary focused on the paper itself, not the extraction process
-- write `summary.md`, `report.json`, `manifest.json`, `extracted/fulltext.md`, `extracted/metadata.json`, `extracted/errors.json`, and `extracted/asset-extraction-report.json`
-- if evidence is incomplete, mark the package `partial` instead of inventing content
-- run package validation if the validator is available
-
-At the end, return:
-- the output directory path
-- the paths to `summary.md`, `report.json`, and `manifest.json`
-- whether the final package is `complete`, `partial`, or `failed`
-```
-
-## Quality Rules
-
-The current contract expects:
-
-- polished research-brief output, not note dumps
-- explicit `complete / partial / failed` status
-- manifest-driven visual asset handling
-- conservative extraction for figures, tables, and formulas
-- no process-side commentary inside `summary.md`
-- header, figure, table, and formula assets embedded directly in the summary
-
-## Repo Structure
+## 仓库结构 / Repository Layout
 
 ```text
 .
 ├── README.md
 ├── docs/
-│   └── superpowers/specs/
+│   ├── superpowers/specs/
+│   └── superpowers/plans/
 ├── examples/
 │   ├── README.md
 │   └── papers/
@@ -365,49 +349,43 @@ The current contract expects:
 │   ├── rebuild_tan2026_bundle.py
 │   └── validate_paper_bundle.py
 ├── skills/
+│   ├── paper-package-runner/
 │   ├── literature-summary/
 │   └── paper-asset-extraction/
 └── output/
     └── papers/
 ```
 
-## Design References
+## 关键文件 / Key References
 
+- [`skills/paper-package-runner/SKILL.md`](skills/paper-package-runner/SKILL.md)
 - [`skills/literature-summary/SKILL.md`](skills/literature-summary/SKILL.md)
 - [`skills/paper-asset-extraction/SKILL.md`](skills/paper-asset-extraction/SKILL.md)
 - [`skills/literature-summary/references/summary-template.md`](skills/literature-summary/references/summary-template.md)
 - [`skills/literature-summary/references/bundle-contract.md`](skills/literature-summary/references/bundle-contract.md)
 - [`skills/literature-summary/references/failure-rules.md`](skills/literature-summary/references/failure-rules.md)
-- [`skills/literature-summary/references/sync-policy.md`](skills/literature-summary/references/sync-policy.md)
 - [`docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md`](docs/superpowers/specs/2026-03-30-literature-summary-skill-design.md)
 - [`docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md`](docs/superpowers/specs/2026-03-30-paper-asset-extraction-skill-design.md)
+- [`docs/superpowers/specs/2026-03-31-paper-package-runner-skill-design.md`](docs/superpowers/specs/2026-03-31-paper-package-runner-skill-design.md)
 
-## English Quick View
+## 当前状态 / Current Status
 
-### What is production flow
+### 中文
 
-- Start with `literature-summary`
-- Prefer `paper-asset-extraction` for visuals
-- Write a runtime paper package under `output/papers/<paper-slug>/`
+当前仓库已经具备：
 
-### What is test flow
+- `paper-package-runner` 作为标准入口
+- `literature-summary` 作为主总结 skill
+- `paper-asset-extraction` 作为图表公式提取 skill
+- 可复现的 example inputs 和 example outputs
+- README 中英双语使用说明
 
-- Use committed PDFs in `examples/papers/`
-- Rebuild example paper packages with `scripts/rebuild_<slug>_bundle.py`
-- Validate them with `scripts/validate_paper_bundle.py`
+### English
 
-### What should users actually run
+The repo now provides:
 
-- Use the skills
-- Do not start from rebuild scripts unless you are maintaining repo examples
-
-## Current Status
-
-This repo currently includes:
-
-- the first working version of `literature-summary`
-- the first working version of `paper-asset-extraction`
-- committed example paper inputs
-- committed example paper packages
-- validation and fix-log utilities
-- a README that separates actual skill usage from repo testing workflow
+- `paper-package-runner` as the standard entry skill
+- `literature-summary` as the main brief-writing skill
+- `paper-asset-extraction` as the visual-asset extraction skill
+- reproducible example inputs and example outputs
+- a bilingual README for both fresh-machine onboarding and normal usage

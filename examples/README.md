@@ -1,22 +1,48 @@
-# Example Inputs
+# Example Inputs / 样例输入
 
-This folder stores **example input PDFs** used for repo-side testing and reproducible validation.
+## 中文说明
 
-These files are:
+这个目录保存的是 **仓库测试用的样例 PDF**。
 
-- test inputs for committed example paper packages
-- used by `scripts/rebuild_<slug>_bundle.py`
-- not special requirements of the skills themselves
+它们用于：
 
-If you are doing a real paper run, you can point the skills at any readable PDF path. You do **not** need to copy your paper into this folder first.
+- 复现实验
+- 重建 example paper packages
+- 回归测试和验证
 
-## Included Example Inputs
+它们**不是**普通用户运行 skill 时必须使用的固定目录。
+
+如果你只是想处理一篇自己的论文，直接把本地 PDF 路径交给：
+
+- `paper-package-runner`
+
+即可，不需要先复制到这里。
+
+## English Explanation
+
+This folder stores **example PDFs for repo-side testing**.
+
+They are used for:
+
+- reproducible examples
+- rebuilding committed example paper packages
+- regression checking and validation
+
+They are **not** a required runtime location for normal users.
+
+If you simply want to process your own paper, pass your local PDF path directly to:
+
+- `paper-package-runner`
+
+There is no need to copy the file into this folder first.
+
+## Included Example PDFs / 当前样例 PDF
 
 - `219qiushan.pdf`
 - `Tan2026.pdf`
 - `Simulating Particle Dispersions in Nematic Liquid-Crystal Solvents.pdf`
 
-## Related Test Flow
+## Repo Test Flow / 仓库测试流程
 
 ```text
 examples/papers/*.pdf
@@ -25,11 +51,12 @@ examples/papers/*.pdf
   -> scripts/validate_paper_bundle.py
 ```
 
-## Related Actual Flow
+## Production Flow / 实际使用流程
 
 ```text
 /absolute/path/to/your-paper.pdf
-  -> literature-summary
-     -> paper-asset-extraction
+  -> paper-package-runner
+     -> literature-summary
+        -> paper-asset-extraction
   -> output/papers/<paper-slug>/
 ```
