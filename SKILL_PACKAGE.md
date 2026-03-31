@@ -33,40 +33,34 @@ git sparse-checkout set paperer-skill-package
 git checkout main
 ```
 
-## Included Production Skills
+## Included Skills
 
-- `paperer-skill-package/skills/paper-package-runner/`
-- `paperer-skill-package/skills/literature-summary/`
-- `paperer-skill-package/skills/paper-asset-extraction/`
+- Public entry skill:
+  - `paperer-skill-package/skills/paperer/`
+- Thin orchestration skill:
+  - `paperer-skill-package/skills/paper-package-runner/`
+- Core production skills:
+  - `paperer-skill-package/skills/literature-summary/`
+  - `paperer-skill-package/skills/paper-asset-extraction/`
 
 ## Default Entry Skill
 
-- `paperer-skill-package/skills/paper-package-runner/SKILL.md`
+- `paperer-skill-package/skills/paperer/SKILL.md`
 
 Use that skill first. Do not start from repo README sections or maintainer scripts.
 
 ## Minimal Copyable Prompt
 
 ```text
-If the current workspace does not already contain the `Paperer` skill package, first obtain only this directory from:
-https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package
-
-After download, the expected local path is:
-paperer-skill-package/
-
-Then use the entry skill at:
-paperer-skill-package/skills/paper-package-runner/SKILL.md
-
-Do not use repo-maintainer files such as scripts/rebuild_*.py unless the task is repo maintenance.
-
-Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
+Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```
 
 ## Expected Production Flow
 
 ```text
-paper-package-runner
-  -> literature-summary
-     -> paper-asset-extraction
+paperer
+  -> paper-package-runner
+     -> literature-summary
+        -> paper-asset-extraction
   -> output/papers/<paper-slug>/
 ```

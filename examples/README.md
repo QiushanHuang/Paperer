@@ -12,7 +12,7 @@
 
 它们**不是**普通用户运行 skill 时必须使用的固定目录。
 
-如果你只是想处理一篇自己的论文，直接把本地 PDF 路径交给 `paper-package-runner` 即可，不需要先复制到这里。
+如果你只是想处理一篇自己的论文，直接把本地 PDF 路径交给 `paperer` 即可，不需要先复制到这里。
 
 ## English Explanation
 
@@ -26,7 +26,7 @@ They are used for:
 
 They are **not** a required runtime location for normal users.
 
-If you simply want to process your own paper, pass your local PDF path directly to `paper-package-runner`. There is no need to copy the file into this folder first.
+If you simply want to process your own paper, pass your local PDF path directly to `paperer`. There is no need to copy the file into this folder first.
 
 ## Included Example PDFs / 当前样例 PDF
 
@@ -46,8 +46,9 @@ examples/papers/*.pdf
 
 ```text
 /absolute/path/to/your-paper.pdf
-  -> paper-package-runner
-     -> literature-summary
-        -> paper-asset-extraction
+  -> paperer
+     -> paper-package-runner
+        -> literature-summary
+           -> paper-asset-extraction
   -> output/papers/<paper-slug>/
 ```

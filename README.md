@@ -15,7 +15,7 @@ For the English version, see [README_en.md](README_en.md).
 - 人类优先看这个 `README.md`
 - Agent / 安装器优先看 [SKILL_PACKAGE.md](SKILL_PACKAGE.md)
 - 对外最小可分发目录是 [paperer-skill-package/](paperer-skill-package/)
-- 默认入口 skill 是 [`paper-package-runner`](skills/paper-package-runner/SKILL.md)
+- 对外默认入口 skill 是 [`paperer`](skills/paperer/SKILL.md)
 
 如果目标只是“调用 skill 处理论文”，不要先读 maintainer 文档，也不要先找 `scripts/rebuild_*.py`。
 
@@ -23,7 +23,8 @@ For the English version, see [README_en.md](README_en.md).
 
 | Skill | 作用 |
 |------|------|
-| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | 标准入口 skill，负责最小参数采集、默认值推断和调用顺序 |
+| [`paperer`](skills/paperer/SKILL.md) | 对外公开入口 skill，供短 prompt 和新 agent 直接调用 |
+| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | 薄 orchestration skill，作为 `paperer` 背后的实现入口 |
 | [`literature-summary`](skills/literature-summary/SKILL.md) | 主总结 skill，负责 `summary.md`、`report.json`、头图、文本提取 |
 | [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md) | 图表公式提取 skill，负责 `manifest.json` 和视觉资产 |
 
@@ -36,7 +37,7 @@ For the English version, see [README_en.md](README_en.md).
 - 期望本地目录名：
   - `paperer-skill-package/`
 - 默认入口文件：
-  - `paperer-skill-package/skills/paper-package-runner/SKILL.md`
+  - `paperer-skill-package/skills/paperer/SKILL.md`
 
 只有在下面这些情况，才应该获取完整仓库：
 
@@ -48,9 +49,9 @@ For the English version, see [README_en.md](README_en.md).
 
 如果你在一台新机器上，只想最快把论文处理成功，推荐路径只有 4 步：
 
-1. 检查当前工作区是否已经有 3 个 `Paperer` production skills
+1. 检查当前工作区是否已经有 `Paperer` skills
 2. 如果没有，只获取 `paperer-skill-package/`
-3. 调用 `paper-package-runner`
+3. 调用 `paperer`
 4. 只提供论文 PDF 路径
 
 默认行为已经内嵌在 skill 内：
@@ -63,18 +64,7 @@ For the English version, see [README_en.md](README_en.md).
 ## 最简调用提示词
 
 ```text
-If the current workspace does not already contain the `Paperer` skill package, first obtain only this directory from:
-https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package
-
-After download, the expected local path is:
-paperer-skill-package/
-
-Then use the entry skill at:
-paperer-skill-package/skills/paper-package-runner/SKILL.md
-
-Do not use repo-maintainer files such as scripts/rebuild_*.py unless the task is repo maintenance.
-
-Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
+Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```
 
 上面这段提示词已经足够。下面这些默认行为都写进了 skill 里，不需要再重复写：
@@ -90,9 +80,10 @@ Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 普通用户的实际流程应当是：
 
 ```text
-paper-package-runner
-  -> literature-summary
-     -> paper-asset-extraction
+paperer
+  -> paper-package-runner
+     -> literature-summary
+        -> paper-asset-extraction
   -> output/papers/<paper-slug>/
 ```
 

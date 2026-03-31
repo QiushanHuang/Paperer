@@ -1,27 +1,25 @@
 ---
 name: paper-package-runner
-description: Use when a readable paper PDF needs the primary Paperer entry skill, especially when the current workspace may need the minimal `paperer-skill-package/` directory instead of the full repo.
+description: Use when the public `paperer` skill routes into the thin orchestration layer behind normal Paperer paper-package generation.
 ---
 
 # Paper Package Runner
 
 ## Overview
 
-Use this as the primary entry skill for generating a paper package from a readable paper PDF.
+Use this as the thin orchestration skill behind the public `paperer` entry.
 
 Core principle: ask only for the truly blocking input, default the rest safely, and route the run through the existing production skills instead of duplicating their logic.
 
-A fresh agent should start here rather than searching maintainer docs, repo README sections, or rebuild scripts first.
+If the public `paperer` skill is available, normal callers should start there instead of using this internal runner directly.
 
 ## When to Use
 
 Use this skill when:
 
-- the user wants the fastest normal path for processing a paper PDF
-- the user may be on a fresh machine or outside the `Paperer` workspace
-- the current workspace may need the minimal `paperer-skill-package/` directory
-- the user should not need to remember which production skill to call first
-- the user wants one portable prompt that can be reused across machines
+- the public `paperer` skill has already selected this runner
+- the task is to maintain the thin orchestration layer behind the public entry
+- a workflow already depends on the internal `paper-package-runner` name
 
 Do not use this skill when:
 
@@ -45,6 +43,7 @@ Optional:
 Before asking the user anything beyond the PDF path:
 
 1. Check whether the current environment already has the `Paperer` production skills available:
+   - `paperer`
    - `paper-package-runner`
    - `literature-summary`
    - `paper-asset-extraction`
@@ -54,10 +53,11 @@ Before asking the user anything beyond the PDF path:
      - `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
    - Expected local path after download:
      - `paperer-skill-package/`
-   - Expected entry skill path:
-     - `paperer-skill-package/skills/paper-package-runner/SKILL.md`
+   - Expected public entry skill path:
+     - `paperer-skill-package/skills/paperer/SKILL.md`
 4. Do not fetch the full repo unless the task is repo-maintainer work or the user explicitly asks for full-repo artifacts.
-5. Do not send the user into repo-maintainer flows such as:
+5. If `paperer` is available, prefer starting there for user-facing runs.
+6. Do not send the user into repo-maintainer flows such as:
    - `examples/papers/*`
    - `scripts/rebuild_<slug>_bundle.py`
    - `scripts/validate_paper_bundle.py`
@@ -122,6 +122,8 @@ It must not:
 ## Quick Reference
 
 - Primary entry skill: `paper-package-runner`
+- Public entry skill: `paperer`
+- Thin orchestration skill: `paper-package-runner`
 - Main brief-writing skill: `literature-summary`
 - Preferred visual-asset skill: `paper-asset-extraction`
 - Required user input: `paper_pdf_path`
@@ -138,6 +140,7 @@ It must not:
 | Asking the user for every optional field up front | Ask only for `paper_pdf_path`; default `target_language` to `Chinese` and derive the rest unless overrides are needed. |
 | Starting normal usage from rebuild scripts | Rebuild scripts are for repo-maintainer testing, not the production entry path. |
 | Fetching the full repo just to run the skills | Obtain only `paperer-skill-package/` unless maintainer files are actually needed. |
-| Assuming a fresh agent should read README first | Start from `paper-package-runner`, not from repo overview docs. |
+| Assuming a fresh agent should read README first | Start from `paperer`, not from repo overview docs. |
+| Exposing `paper-package-runner` as the first user-facing name | Public callers should say `use Paperer skill`; this runner stays thin behind that entry. |
 | Calling `paper-asset-extraction` as the only user-facing step | Use `paper-package-runner` as the entry and let `literature-summary` orchestrate the final package. |
 | Re-implementing summary or extraction logic in the wrapper | Keep this skill thin and delegate all core work to the existing production skills. |

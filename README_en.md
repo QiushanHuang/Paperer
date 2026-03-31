@@ -15,7 +15,7 @@ For the Chinese version, see [README.md](README.md).
 - Humans should start with this `README_en.md`
 - Agents and installers should start with [SKILL_PACKAGE.md](SKILL_PACKAGE.md)
 - The minimal distributable folder is [paperer-skill-package/](paperer-skill-package/)
-- The default entry skill is [`paper-package-runner`](skills/paper-package-runner/SKILL.md)
+- The public default entry skill is [`paperer`](skills/paperer/SKILL.md)
 
 If the goal is simply to process a paper with the skills, do not start from maintainer docs and do not start by searching for `scripts/rebuild_*.py`.
 
@@ -23,7 +23,8 @@ If the goal is simply to process a paper with the skills, do not start from main
 
 | Skill | Role |
 |------|------|
-| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | Standard entry skill for minimal intake, default derivation, and orchestration |
+| [`paperer`](skills/paperer/SKILL.md) | Public entry skill for short prompts and fresh agents |
+| [`paper-package-runner`](skills/paper-package-runner/SKILL.md) | Thin orchestration skill behind `paperer` |
 | [`literature-summary`](skills/literature-summary/SKILL.md) | Main brief-writing skill for `summary.md`, `report.json`, header image, and text extraction |
 | [`paper-asset-extraction`](skills/paper-asset-extraction/SKILL.md) | Visual-asset extraction skill for `manifest.json` and figure/table/formula assets |
 
@@ -36,7 +37,7 @@ Normal users and fresh agents should obtain the minimal skill package, not the f
 - Expected local directory name:
   - `paperer-skill-package/`
 - Default entry file:
-  - `paperer-skill-package/skills/paper-package-runner/SKILL.md`
+  - `paperer-skill-package/skills/paperer/SKILL.md`
 
 Only obtain the full repo if:
 
@@ -48,9 +49,9 @@ Only obtain the full repo if:
 
 If you want the fastest successful path on a new machine, use this flow:
 
-1. Check whether the current workspace already has the 3 `Paperer` production skills
+1. Check whether the current workspace already has the `Paperer` skills
 2. If not, obtain only `paperer-skill-package/`
-3. Call `paper-package-runner`
+3. Call `paperer`
 4. Provide only the paper PDF path
 
 The following defaults are already embedded in the skills:
@@ -63,18 +64,7 @@ The following defaults are already embedded in the skills:
 ## Minimal Copyable Prompt
 
 ```text
-If the current workspace does not already contain the `Paperer` skill package, first obtain only this directory from:
-https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package
-
-After download, the expected local path is:
-paperer-skill-package/
-
-Then use the entry skill at:
-paperer-skill-package/skills/paper-package-runner/SKILL.md
-
-Do not use repo-maintainer files such as scripts/rebuild_*.py unless the task is repo maintenance.
-
-Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
+Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```
 
 That prompt is enough. The following are already embedded in the skill and do not need to be restated:
@@ -90,9 +80,10 @@ That prompt is enough. The following are already embedded in the skill and do no
 The normal user-facing production flow is:
 
 ```text
-paper-package-runner
-  -> literature-summary
-     -> paper-asset-extraction
+paperer
+  -> paper-package-runner
+     -> literature-summary
+        -> paper-asset-extraction
   -> output/papers/<paper-slug>/
 ```
 

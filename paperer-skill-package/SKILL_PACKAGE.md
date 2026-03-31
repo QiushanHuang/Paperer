@@ -2,15 +2,19 @@
 
 This directory is the minimal distributable `Paperer` skill package.
 
-## Included Production Skills
+## Included Skills
 
-- `skills/paper-package-runner/`
-- `skills/literature-summary/`
-- `skills/paper-asset-extraction/`
+- Public entry skill:
+  - `skills/paperer/`
+- Thin orchestration skill:
+  - `skills/paper-package-runner/`
+- Core production skills:
+  - `skills/literature-summary/`
+  - `skills/paper-asset-extraction/`
 
 ## Default Entry Skill
 
-- `skills/paper-package-runner/SKILL.md`
+- `skills/paperer/SKILL.md`
 
 Start from that skill first. Do not start from maintainer scripts.
 
@@ -41,16 +45,5 @@ git checkout main
 ## Minimal Copyable Prompt
 
 ```text
-If the current workspace does not already contain the `Paperer` skill package, first obtain only this directory from:
-https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package
-
-After download, the expected local path is:
-paperer-skill-package/
-
-Then use the entry skill at:
-paperer-skill-package/skills/paper-package-runner/SKILL.md
-
-Do not use repo-maintainer files such as scripts/rebuild_*.py unless the task is repo maintenance.
-
-Generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
+Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```
