@@ -84,7 +84,7 @@ If this skill is called from `paper-package-runner`, accept the wrapper's derive
 6. Write `report.json`.
    Record completeness, missing assets, unreadable regions, explicit errors, and any propagated uncertainty from `paper-asset-extraction`.
 
-7. If this skill is being authored in `Paperer`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `slidegen`.
+7. If this skill is being authored in `paperer-skill-plugin`, follow [references/sync-policy.md](references/sync-policy.md) for mirroring into `Paperer`.
 
 ## Quick Reference
 

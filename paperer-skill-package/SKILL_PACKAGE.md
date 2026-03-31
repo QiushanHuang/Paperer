@@ -30,13 +30,13 @@ Do **not** fetch the full repo unless the task is repo-maintainer work or the us
 
 ## Source Directory
 
-- `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
+- `https://github.com/QiushanHuang/paperer-skill-plugin/tree/main/paperer-skill-package`
 
 ## One Way To Fetch Only This Directory
 
 ```bash
-git clone --filter=blob:none --no-checkout https://github.com/QiushanHuang/Paperer.git
-cd Paperer
+git clone --filter=blob:none --no-checkout https://github.com/QiushanHuang/paperer-skill-plugin.git
+cd paperer-skill-plugin
 git sparse-checkout init --cone
 git sparse-checkout set paperer-skill-package
 git checkout main
@@ -45,5 +45,5 @@ git checkout main
 ## Minimal Copyable Prompt
 
 ```text
-Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
+Check whether the current workspace already contains the `Paperer` skills. If not, install the minimal skill package from https://github.com/QiushanHuang/paperer-skill-plugin/tree/main/paperer-skill-package at `paperer-skill-package/`. Use Paperer skill to generate a paper package for the PDF at /absolute/path/to/your-paper.pdf.
 ```

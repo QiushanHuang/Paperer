@@ -1,14 +1,14 @@
 # Sync Policy
 
-This skill is authored in `Paperer` and mirrored into `slidegen`.
+This skill is authored in `paperer-skill-plugin` and mirrored into `Paperer`.
 
 ## Source of truth
 
-`Paperer` is the source repository for the skill module.
+`paperer-skill-plugin` is the public source repository for the skill module.
 
 Sync direction:
 
-`Paperer -> slidegen`
+`paperer-skill-plugin -> Paperer`
 
 ## What to mirror
 
@@ -21,6 +21,6 @@ Mirror the skill package and supporting files, including:
 
 ## What not to treat as source
 
-Do not treat `slidegen` as an independent source of truth for mirrored skill files.
+Do not treat `Paperer` as an independent source of truth for mirrored skill files.
 
-Generated paper bundles are runtime artifacts and should be managed separately from the skill source tree unless a later workflow explicitly requires them in `slidegen`.
+Generated paper bundles are runtime artifacts and should be managed separately from the skill source tree unless a later workflow explicitly requires them in `Paperer`.

@@ -50,7 +50,7 @@ Before asking the user anything beyond the PDF path:
 2. If the skills are already available, do not fetch anything.
 3. If the skills are not available, obtain only the minimal `Paperer` skill package directory:
    - GitHub directory:
-     - `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
+     - `https://github.com/QiushanHuang/paperer-skill-plugin/tree/main/paperer-skill-package`
    - Expected local path after download:
      - `paperer-skill-package/`
    - Expected public entry skill path:

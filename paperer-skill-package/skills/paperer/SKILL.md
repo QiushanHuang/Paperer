@@ -18,7 +18,7 @@ Start here when the user says "use Paperer skill". Do not start from maintainer 
    - `paper-asset-extraction`
 2. If they are already available, fetch nothing.
 3. If they are not available, install only the minimal skill package from:
-   - `https://github.com/QiushanHuang/Paperer/tree/main/paperer-skill-package`
+   - `https://github.com/QiushanHuang/paperer-skill-plugin/tree/main/paperer-skill-package`
 4. Expected local path after install:
    - `paperer-skill-package/`
 5. Expected public entry skill path after install:
