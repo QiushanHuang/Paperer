@@ -47,6 +47,7 @@ Typical `partial` triggers:
 
 - one or more major assets likely missing
 - important formulas unreadable or fragmented
+- one or more numbered formulas are missing from the recovered sequence
 - several assets carry `tight_crop_risk`
 - one or more figure or table numbers are missing from the recovered sequence
 - the overall set appears incomplete

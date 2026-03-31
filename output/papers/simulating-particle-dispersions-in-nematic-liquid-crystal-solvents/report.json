@@ -1,7 +1,7 @@
 {
   "target_language": "Chinese",
   "status": "partial",
-  "asset_manifest_status": "complete",
+  "asset_manifest_status": "partial",
   "paper_slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
   "summary_path": "output/papers/simulating-particle-dispersions-in-nematic-liquid-crystal-solvents/summary.md",
   "missing_sections": [],
@@ -12,6 +12,7 @@
   "notes": [
     "The paper header, three figure crops, and seven formula crops were generated for this validation run.",
     "No standalone tables were confidently detected in the source PDF; the table section is preserved as a structural note rather than a fabricated asset block.",
+    "The recovered numbered equations contain a visible gap before Eq. (9), so the asset bundle remains partial under the stricter formula-audit rule.",
     "This run validates the skill's partial-output behavior as well as its polished Chinese research-brief format."
   ],
   "errors": []

@@ -1,6 +1,6 @@
 {
   "paper_slug": "simulating-particle-dispersions-in-nematic-liquid-crystal-solvents",
-  "status": "complete",
+  "status": "partial",
   "policy": {
     "crop_bias": "prefer-larger-over-missing",
     "dedupe": true,
@@ -93,5 +93,8 @@
       "quality_flags": []
     }
   ],
-  "global_flags": []
+  "global_flags": [
+    "numbering_gap",
+    "possible_missing_formulas"
+  ]
 }

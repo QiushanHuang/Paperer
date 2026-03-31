@@ -34,9 +34,43 @@ def find_label_numbers(text: str, label: str) -> list[int]:
         pattern = r"Fig\.\s*(\d+)"
     elif label == "table":
         pattern = r"Table\s*(\d+)"
+    elif label == "formula":
+        patterns = [
+            r"Eq\.?\s*[\(\[]?(\d+)[\)\]]?",
+            r"Equation\s*[\(\[]?(\d+)[\)\]]?",
+            r"公式\s*[\(（]?(\d+)[\)）]?",
+        ]
+        numbers: list[int] = []
+        for pattern in patterns:
+            numbers.extend(int(match) for match in re.findall(pattern, text, flags=re.IGNORECASE))
+        return numbers
     else:
         return []
     return [int(match) for match in re.findall(pattern, text)]
+
+
+def has_formula_marker(text: str) -> bool:
+    return bool(re.search(r"\bEq\.?\b|\bEquation\b|公式|\bequation\b", text, flags=re.IGNORECASE))
+
+
+def require_partial_with_gap_flags(
+    errors: list[str],
+    manifest: dict,
+    asset_type: str,
+    ids: list[int],
+) -> None:
+    if not ids:
+        return
+    expected = list(range(ids[0], ids[-1] + 1))
+    if ids == expected:
+        return
+
+    global_flags = set(manifest.get("global_flags", []))
+    status = manifest.get("status")
+    if status not in {"partial", "failed"}:
+        errors.append(f"{asset_type} numbering gap must downgrade manifest status: have {ids}, expected {expected}")
+    if not ({"numbering_gap", "asset_set_incomplete"} & global_flags or f"possible_missing_{asset_type}s" in global_flags):
+        errors.append(f"{asset_type} numbering gap must be recorded in global_flags: have {ids}, expected {expected}")
 
 
 def main() -> int:
@@ -82,6 +116,8 @@ def main() -> int:
 
     if "asset_manifest_status" not in report:
         errors.append("report.json is missing asset_manifest_status")
+    elif report["asset_manifest_status"] != manifest.get("status"):
+        errors.append("report.json asset_manifest_status does not match manifest.json status")
 
     if deprecated_draft_path.exists():
         errors.append("Bundle still contains deprecated draft.pdf output")
@@ -126,12 +162,32 @@ def main() -> int:
             if figure_nums:
                 errors.append(f"Table asset must not contain figure numbering in caption hint: {asset_id} -> {asset['caption_hint']}")
 
+        if asset_type == "formula":
+            if find_label_numbers(asset["caption_hint"], "figure"):
+                errors.append(f"Formula asset must not contain figure numbering in caption hint: {asset_id} -> {asset['caption_hint']}")
+            if find_label_numbers(asset["caption_hint"], "table"):
+                errors.append(f"Formula asset must not contain table numbering in caption hint: {asset_id} -> {asset['caption_hint']}")
+            if not has_formula_marker(asset["caption_hint"]):
+                errors.append(f"Formula asset must preserve an explicit equation cue in caption hint: {asset_id} -> {asset['caption_hint']}")
+            formula_nums = find_label_numbers(asset["caption_hint"], "formula")
+            if len(set(formula_nums)) > 1:
+                errors.append(f"Formula asset must map to at most one formula number: {asset_id} -> {asset['caption_hint']}")
+            elif formula_nums and formula_nums[0] != number:
+                errors.append(f"Formula asset id does not match caption number: {asset_id} -> {asset['caption_hint']}")
+
     for asset_type in ("figure", "table"):
         ids = sorted(number for number, _asset in by_type.get(asset_type, []))
         if ids:
             expected = list(range(1, ids[-1] + 1))
             if ids != expected:
                 errors.append(f"{asset_type} numbering is not continuous: have {ids}, expected {expected}")
+
+    numbered_formula_ids = sorted(
+        number
+        for number, asset in by_type.get("formula", [])
+        if find_label_numbers(asset["caption_hint"], "formula")
+    )
+    require_partial_with_gap_flags(errors, manifest, "formula", numbered_formula_ids)
 
     if errors:
         for error in errors:

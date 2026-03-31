@@ -15,6 +15,8 @@ At this stage:
 - prefer over-inclusive crops
 - do not reject a candidate only because it includes extra caption text, surrounding whitespace, or nearby body text
 - keep possible sibling panels visible when you are unsure whether they are separate assets
+- only collect formula candidates when they are standalone displayed equation blocks outside paragraph flow and carry an explicit equation cue such as `Eq.`, `Equation`, `公式`, or a visible equation number
+- reject inline math, prose fragments with symbols, and sentence-level variable definitions as formula candidates
 
 ## Pass 2: Review And Normalization
 
@@ -26,8 +28,8 @@ For every candidate:
 - widen crops that look too tight
 - flag likely missed siblings or adjacent formula lines
 - separate mixed crops that contain multiple labeled assets of different types
-- if labels are visible, verify that each emitted figure or table corresponds to exactly one paper number
-- if numbering is not continuous, go back and look for the missing figure or table before finalizing
+- if labels are visible, verify that each emitted figure, table, or numbered formula corresponds to exactly one paper number
+- if numbering is not continuous, go back and look for the missing figure, table, or formula before finalizing
 
 ## Conservative Ordering Rules
 
@@ -78,14 +80,26 @@ Keep:
 - the full displayed formula
 - equation numbers when present
 - neighboring lines when needed for multiline expressions
+- enough surrounding margin to preserve the full block and its equation cue without truncation
 
-If the formula is hard to segment cleanly, prefer one larger block over multiple clipped fragments.
+Rules:
+
+- only treat standalone displayed equation blocks outside paragraph flow as formulas
+- require an explicit equation cue such as `Eq.`, `Equation`, `公式`, or visible equation numbering
+- do not emit inline math, prose fragments, or sentence-level variable definitions as formulas
+- one crop should map to one numbered formula
+- a multiline displayed equation with one number is still one formula asset
+- emitted file ids should match the paper numbering when the number is visible
+- if the crop risks cutting off any line, bracket, operator, or equation label, widen it
+- if two distinct numbered equations appear in one crop, split them and review numbering again
+
+If the formula is hard to segment cleanly, prefer one larger standalone block over multiple clipped fragments.
 
 ## Numbering Review
 
 Before finalizing a bundle:
 
-- list the detected `Fig. N` and `Table N` numbers in paper order
+- list the detected `Fig. N`, `Table N`, and numbered equation labels in paper order
 - check for gaps such as `1, 2, 4`
 - if a gap exists, re-open the relevant pages and look for the missing asset
-- if the missing asset cannot be recovered, mark the bundle `partial` and record the gap explicitly
+- if the missing asset cannot be recovered, mark the bundle `partial`, record the gap explicitly, and add a matching global flag such as `numbering_gap` or `possible_missing_formulas`

@@ -41,7 +41,9 @@
 - `caption_hint`
 - `quality_flags`
 
-When figure or table numbering is visible in the paper, the numeric suffix of `id` must match that paper numbering.
+When figure, table, or formula numbering is visible in the paper, the numeric suffix of `id` must match that paper numbering.
+
+For formula assets, `caption_hint` should preserve the equation cue whenever possible, such as `Eq. (4)`, `Equation (4)`, or `公式（4）`.
 
 ## Per-asset structure
 

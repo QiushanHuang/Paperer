@@ -14,6 +14,7 @@ The headings must be localized to `target_language`. The Chinese labels below de
 - When extraction is partial, keep the document polished and mark missing support clearly.
 - Keep the prose focused on the paper itself. Do not discuss extraction strategy, crop quality, or other workflow-side details inside `summary.md`.
 - Every header image, figure, table, and formula that exists in the bundle must be embedded visibly inside `summary.md`.
+- The displayed page title must always be the Chinese translation of the paper's English title, even when the body follows another `target_language`.
 - In `1.3 核心结论速览`, allow multiple problem / method / result / contribution points when the paper clearly contains more than one.
 - Treat the section bullets below as compact writing prompts: cover each point directly, but answer in polished prose rather than checklist fragments.
 
@@ -23,7 +24,8 @@ The headings must be localized to `target_language`. The Chinese labels below de
 
 Include:
 
-- paper title
+- use the Chinese translation of the paper's English title as the displayed page title, regardless of `target_language`
+- keep the original English paper title in the metadata block beneath it
 - venue or journal
 - authors and affiliations
 - basic citation metadata

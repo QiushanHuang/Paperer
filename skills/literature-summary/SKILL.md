@@ -55,6 +55,7 @@ If `target_language` is missing, ask for it before writing.
 
 4. Read [references/summary-template.md](references/summary-template.md) and write `summary.md`.
    The output must:
+   - use the Chinese translation of the paper's English title as the displayed page title, even when the rest of the summary follows another `target_language`
    - follow the selected language
    - read like a professional research brief
    - treat each template bullet as a compact coverage prompt and answer it in polished prose
@@ -76,7 +77,8 @@ If `target_language` is missing, ask for it before writing.
 
 ## Quick Reference
 
-- Output language follows `target_language`.
+- The displayed page title is always the Chinese translation of the paper's English title.
+- Aside from that title rule, output language follows `target_language`.
 - Prefer `paper-asset-extraction` for figures, tables, and formulas.
 - If `manifest.json` exists, trust its asset paths, types, page numbers, and flags.
 - Do not keep Chinese headings when the selected language is not Chinese.
@@ -111,4 +113,5 @@ Before finishing, confirm:
 | Dumping screenshots without interpretation | Every visual block needs a short explanation and its role in the argument. |
 | Guessing missing method or formula details | Mark uncertainty explicitly and record it in `report.json`. |
 | Writing about crop quality or extraction strategy inside the summary | Keep workflow-side issues in `report.json`; keep `summary.md` focused on the paper itself. |
+| Letting the displayed page title follow the target language | Always use the Chinese translation of the paper's English title as the displayed page title, and keep the original English title in metadata. |
 | Writing a rough note dump | Rewrite into publication-ready prose with stable structure. |
